@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/StudioAdminWeb/.vs
+/StudioAdminWeb/StudioAdminData/bin/Debug/net7.0
+/StudioAdminWeb/StudioAdminData/obj
+/StudioAdminWeb/StudioAdminWeb/bin/Debug/net7.0
+/StudioAdminWeb/StudioAdminWeb/obj

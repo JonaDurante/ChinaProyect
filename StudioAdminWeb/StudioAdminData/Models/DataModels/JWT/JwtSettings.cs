@@ -1,4 +1,4 @@
-﻿namespace StudioAdminData.Models.DataModels
+﻿namespace StudioAdminData.Models.DataModels.JWT
 {
     public class JwtSettings
     {

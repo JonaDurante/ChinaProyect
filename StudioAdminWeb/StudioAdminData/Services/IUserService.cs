@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using StudioAdminData.Models.DataModels;
+﻿using StudioAdminData.Models.DataModels.Business;
 
 namespace StudioAdminData.Services
 {

@@ -1,6 +1,5 @@
-﻿using System.Xml.Linq;
-using StudioAdminData.DataAcces;
-using StudioAdminData.Models.DataModels;
+﻿using StudioAdminData.DataAcces;
+using StudioAdminData.Models.DataModels.Business;
 
 namespace StudioAdminData.Services
 {
@@ -15,26 +14,26 @@ namespace StudioAdminData.Services
             _courseServices = courseServices;
         }
 
-        public List<Student> GetStudentByAge()
+        public List<Third> GetStudentByAge()
         {
             var actualDate = DateTime.Today;
-            return _context.Students.Where(x => (actualDate - x.DoB).TotalDays / 365.25 > 18).ToList();
+            return _context.Thirds.Where(x => (actualDate - x.DateOfBirthday).TotalDays / 365.25 > 18).ToList();
         }
-        public List<Student> GetAllEnabledStudents()
+        public List<Third> GetAllEnabledStudents()
         {
-            return _context.Students.Where(x => x.IsDeleted == false).ToList();
+            return _context.Thirds.Where(x => x.IsDeleted == false).ToList();
         }
-        public List<Student> GetAllStudentWithOutCourses()
+        public List<Third> GetAllStudentWithOutCourses()
         {
             var CoursesWithStudents = _courseServices.GetCoursesWhitAnyStudent();
-            var Students = GetAllEnabledStudents();
-            var StudentsInCourses = CoursesWithStudents.SelectMany(c => c.Student).ToList();
-            var StudentsWithoutCourses = Students.Where(s => !StudentsInCourses.Contains(s)).ToList();
+            var Thirds = GetAllEnabledStudents();
+            var StudentsInCourses = CoursesWithStudents.SelectMany(c => c.Thirds).ToList();
+            var StudentsWithoutCourses = Thirds.Where(s => !StudentsInCourses.Contains(s)).ToList();
             return StudentsWithoutCourses;
         }
 
-        public ICollection<Student> GetStudentsByCourseName(string CourseName) {
-            return _courseServices.GetCoursesByName(CourseName).Student;
+        public ICollection<Third> GetStudentsByCourseName(string CourseName) {
+            return _courseServices.GetCoursesByName(CourseName).Thirds;
         }
 
    

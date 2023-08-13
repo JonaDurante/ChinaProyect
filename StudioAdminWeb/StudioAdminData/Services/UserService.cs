@@ -1,5 +1,5 @@
 ﻿using StudioAdminData.DataAcces;
-using StudioAdminData.Models.DataModels;
+using StudioAdminData.Models.DataModels.Business;
 
 namespace StudioAdminData.Services
 {
@@ -16,7 +16,7 @@ namespace StudioAdminData.Services
 
         public User GetByMAil(string Email)
         {
-            return _context.Users.Where(x => x.Email == Email).FirstOrDefault();
+            return _context.Users.Where(x => x.Email == Email).First();
         }
 
         public List<User> GetUserWhitOutCourses()

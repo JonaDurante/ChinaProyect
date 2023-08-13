@@ -1,52 +1,51 @@
 ﻿using StudioAdminData.DataAcces;
-using StudioAdminData.Models.DataModels;
+using StudioAdminData.Models.DataModels.Business;
 
 namespace StudioAdminData.Services
 {
     public class CourseServices : ICourseServices
     {
         private readonly StudioAdminDBContext _context;
-        private readonly ICategoryServices _categoryServices;
-        public CourseServices(StudioAdminDBContext context, ICategoryServices categoryServices)
+        public CourseServices(StudioAdminDBContext context)
         {
             _context = context;
-            _categoryServices = categoryServices;
         }
         public List<Course> GetCoursesWhitAnyStudent()
         {
-            return _context.Courses.Where(x => x.Level == level.Medium && x.Student.Any()).ToList();
+            return _context.Courses.Where(x => x.Level == Level.Medium && x.Thirds.Any()).ToList();
         }
         public List<Course> GetCoursesByLevel()
         {
-            return _context.Courses.Where(x => x.Level == level.Expert && x.Categories.Any(y => y.Name.Contains("Filosofía"))).ToList();
+            return _context.Courses.Where(x => x.Level == Level.Expert /*&& x.Categories.Any(y => y.Name.Contains("Filosofía"))*/).ToList();
         }
         public List<Course> GetEmptyCourses()
         {
-            return _context.Courses.Where(x => !x.Student.Any()).ToList();
+            return _context.Courses.Where(x => !x.Thirds.Any()).ToList();
         }
         public List<Course> GetAllCoursesByCategory(string CategoryName)
         {
-            var ConcretCategory = _categoryServices.GetCategoryByName(CategoryName);
-            return _context.Courses.Where(x => x.Categories == ConcretCategory).ToList();
+            //var ConcretCategory = _categoryServices.GetCategoryByName(CategoryName);
+            return _context.Courses.Where(x => x.Name == "").ToList();
         }
 
         public List<Course> GetAllCoursesWithoutChapter()
         {
-            return _context.Courses.Where(x => x.Chapter == null).ToList(); 
+            return _context.Courses.Where(x => x.Name == null).ToList();
         }
 
         public Course GetCoursesByName(string CourseName)
         {
-            return _context.Courses.Where(x => x.Name == CourseName).FirstOrDefault();
+            return _context.Courses.Where(x => x.Name == CourseName).First();
         }
 
-        public string GetTemario(string CourseName) {
+        public string GetTemario(string CourseName)
+        {
             return GetCoursesByName(CourseName).Description;
         }
 
-        public List<Course> GetCoursesByStudent(Student Student)
+        public List<Course> GetCoursesByStudent(Course Student)
         {
-            return _context.Courses.Where(x => x.Student == Student).ToList();
+            return _context.Courses.Where(x => x.Thirds == Student).ToList();
         }
     }
 }

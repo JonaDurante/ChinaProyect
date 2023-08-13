@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StudioAdminData.Models.DataModels
+namespace StudioAdminData.Models.DataModels.Abstract
 {
-    public class BaseEntity
+    public abstract class BaseEntity
     {
         [Required]
         [Key]
@@ -10,7 +10,7 @@ namespace StudioAdminData.Models.DataModels
         public string CreatedBy { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public string UpdatedBy { get; set; } = string.Empty;
-        public DateTime? UpdatedAt { get; set; } 
+        public DateTime? UpdatedAt { get; set; }
         public string DeleteddBy { get; set; } = string.Empty;
         public DateTime? DeletedAt { get; set; }
         public bool IsDeleted { get; set; } = false;

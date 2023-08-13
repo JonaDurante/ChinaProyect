@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using StudioAdminData.Models.DataModels;
+using StudioAdminData.Models.DataModels.JWT;
 
 namespace StudioAdminData
 {

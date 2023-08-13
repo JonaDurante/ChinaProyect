@@ -1,4 +1,4 @@
-﻿using StudioAdminData.Models.DataModels;
+﻿using StudioAdminData.Models.DataModels.Business;
 
 namespace StudioAdminData.Services
 {
@@ -10,7 +10,7 @@ namespace StudioAdminData.Services
         public List<Course> GetAllCoursesByCategory(string CategoryName);
         public List<Course> GetAllCoursesWithoutChapter();
         public Course GetCoursesByName(string CourseName);
-        public List<Course> GetCoursesByStudent(Student Student);
+        public List<Course> GetCoursesByStudent(Course Student);
         public string GetTemario(string CourseName);
 
     }

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StudioAdminData.Models.DataModels;
+using StudioAdminData.Models.DataModels.Business;
 
 namespace StudioAdminData.DataAcces
 {
@@ -9,13 +9,23 @@ namespace StudioAdminData.DataAcces
         {
             
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
-        //ToDo: Add DbSet
-        public DbSet<User> Users { get; set; }
+            modelBuilder.Entity<ActivityValue>(entity =>
+            {
+                entity.HasNoKey();
+
+            });
+
+            // Aquí puedes agregar más configuraciones de entidades, relaciones, índices, etc.
+        }
+
+        public DbSet<ActivityValue> ActivityValues { get; set; }
         public DbSet<Course> Courses { get; set; }
-        public DbSet<Chapter> Chapters { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Student> Students { get; set; }
+        public DbSet<Third> Thirds { get; set; }
+        public DbSet<User> Users { get; set; }
 
     }
 }

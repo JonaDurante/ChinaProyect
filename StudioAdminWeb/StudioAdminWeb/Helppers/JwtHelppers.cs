@@ -1,5 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using StudioAdminData.Models.DataModels;
+using StudioAdminData.Models.DataModels.JWT;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -19,9 +19,9 @@ namespace StudioAdminData.Helppers
                 new Claim(ClaimTypes.Expiration, DateTime.Now.AddDays(1).ToString("MMM ddd dd yyyy HH:mm:ss tt"))
             };
 
-            if (UserAcounts.UserName == "jona")
+            if (UserAcounts.UserName == "Karo")
             {
-                claims.Add(new Claim(ClaimTypes.Role, "Administrator"));
+                claims.Add(new Claim(ClaimTypes.Role, "Admin"));
             }
             else 
             {

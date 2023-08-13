@@ -1,10 +1,8 @@
 // 1. Using para trabajar con EF
-using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using StudioAdminData;
 using StudioAdminData.DataAcces;
-using StudioAdminData.Models.DataModels;
 using StudioAdminData.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,8 +20,6 @@ builder.Services.AddJwtTokenServices(builder.Configuration);
 builder.Services.AddControllers();
 
 // 4. Add Custom Services (folder services)
-builder.Services.AddScoped<IChapterServices, ChapterServices>();
-builder.Services.AddScoped<ICategoryServices, CategoryServices>();
 builder.Services.AddScoped<ICourseServices, CourseServices>();
 builder.Services.AddScoped<IStudentServices, StudentServices>();
 builder.Services.AddScoped<IUserService, UserService>();

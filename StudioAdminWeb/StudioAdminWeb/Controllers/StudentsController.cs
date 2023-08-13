@@ -2,43 +2,42 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Data;
 using StudioAdminData.DataAcces;
-using StudioAdminData.Models.DataModels;
+using StudioAdminData.Models.DataModels.Business;
 
 namespace StudioAdminData.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StudentsController : ControllerBase
+    public class ThirdsController : ControllerBase
     {
         private readonly StudioAdminDBContext _context;
 
-        public StudentsController(StudioAdminDBContext context)
+        public ThirdsController(StudioAdminDBContext context)
         {
             _context = context;
         }
 
-        // GET: api/Students
+        // GET: api/Thirds
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
+        public async Task<ActionResult<IEnumerable<Third>>> GetThirds()
         {
-          if (_context.Students == null)
+          if (_context.Thirds == null)
           {
               return NotFound();
           }
-            return await _context.Students.ToListAsync();
+            return await _context.Thirds.ToListAsync();
         }
 
-        // GET: api/Students/5
+        // GET: api/Thirds/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Student>> GetStudent(int id)
+        public async Task<ActionResult<Third>> GetStudent(int id)
         {
-          if (_context.Students == null)
+          if (_context.Thirds == null)
           {
               return NotFound();
           }
-            var student = await _context.Students.FindAsync(id);
+            var student = await _context.Thirds.FindAsync(id);
 
             if (student == null)
             {
@@ -48,11 +47,11 @@ namespace StudioAdminData.Controllers
             return student;
         }
 
-        // PUT: api/Students/5
+        // PUT: api/Thirds/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
-        public async Task<IActionResult> PutStudent(int id, Student student)
+        public async Task<IActionResult> PutStudent(int id, Third student)
         {
             if (id != student.Id)
             {
@@ -80,38 +79,38 @@ namespace StudioAdminData.Controllers
             return NoContent();
         }
 
-        // POST: api/Students
+        // POST: api/Thirds
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
-        public async Task<ActionResult<Student>> PostStudent(Student student)
+        public async Task<ActionResult<Third>> PostStudent(Third student)
         {
-          if (_context.Students == null)
+          if (_context.Thirds == null)
           {
-              return Problem("Entity set 'StudioAdminDBContext.Students'  is null.");
+              return Problem("Entity set 'StudioAdminDBContext.Thirds'  is null.");
           }
-            _context.Students.Add(student);
+            _context.Thirds.Add(student);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetStudent", new { id = student.Id }, student);
         }
 
-        // DELETE: api/Students/5
+        // DELETE: api/Thirds/5
         [HttpDelete("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
         public async Task<IActionResult> DeleteStudent(int id)
         {
-            if (_context.Students == null)
+            if (_context.Thirds == null)
             {
                 return NotFound();
             }
-            var student = await _context.Students.FindAsync(id);
+            var student = await _context.Thirds.FindAsync(id);
             if (student == null)
             {
                 return NotFound();
             }
 
-            _context.Students.Remove(student);
+            _context.Thirds.Remove(student);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -119,7 +118,7 @@ namespace StudioAdminData.Controllers
 
         private bool StudentExists(int id)
         {
-            return (_context.Students?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Thirds?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

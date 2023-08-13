@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using StudioAdminData.DataAcces;
 using StudioAdminData.Helppers;
-using StudioAdminData.Models.DataModels;
+using StudioAdminData.Models.DataModels.JWT;
+using StudioAdminData.Models.DataModels.Loggin;
 
 namespace StudioAdminData.Controllers
 {
@@ -30,7 +29,7 @@ namespace StudioAdminData.Controllers
 
                 var Token = new UserToken();
                 var searchUser = _context.Users
-                    .Where(us =>us.Email == userLoggin.UserName && us.Password == userLoggin.Password)
+                    .Where(us =>us.Name == userLoggin.UserName && us.Password == userLoggin.Password)
                     .FirstOrDefault();
 
                 if (searchUser != null)

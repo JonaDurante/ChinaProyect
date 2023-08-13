@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using StudioAdminData.Models.DataModels.Abstract;
+using System.ComponentModel.DataAnnotations;
 
-namespace StudioAdminData.Models.DataModels
+namespace StudioAdminData.Models.DataModels.Business
 {
     public class User : BaseEntity
     {

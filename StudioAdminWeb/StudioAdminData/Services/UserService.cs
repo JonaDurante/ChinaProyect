@@ -1,4 +1,5 @@
 ﻿using StudioAdminData.DataAcces;
+using StudioAdminData.Interfaces;
 using StudioAdminData.Models.DataModels.Business;
 
 namespace StudioAdminData.Services
@@ -29,6 +30,10 @@ namespace StudioAdminData.Services
         public List<User> GetAll()
         {
             return _context.Users.Where(x => x.IsDeleted == false).ToList();            
+        }
+        public User GetById(Guid Id)
+        {
+            return _context.Users.Where(x => x.Id == Id && x.IsDeleted == false).First();
         }
     }
 }

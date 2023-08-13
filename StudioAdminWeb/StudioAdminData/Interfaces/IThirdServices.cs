@@ -1,8 +1,8 @@
 ﻿using StudioAdminData.Models.DataModels.Business;
 
-namespace StudioAdminData.Services
+namespace StudioAdminData.Interfaces
 {
-    public interface IStudentServices
+    public interface IThirdServices
     {
         public List<Third> GetStudentByAge();
         public List<Third> GetAllEnabledStudents();

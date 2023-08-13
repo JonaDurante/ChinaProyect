@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudioAdminData.DataAcces;
+using StudioAdminData.Interfaces;
 using StudioAdminData.Models.DataModels.Business;
 
 namespace StudioAdminData.Controllers
@@ -11,39 +12,34 @@ namespace StudioAdminData.Controllers
     [ApiController]
     public class CoursesController : ControllerBase
     {
-        private readonly StudioAdminDBContext _context;
+        private readonly ICourseServices _courseServices;
 
-        public CoursesController(StudioAdminDBContext context)
+        public CoursesController(ICourseServices courseServices)
         {
-            _context = context;
+            _courseServices = courseServices;
         }
 
         // GET: api/Courses
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
         {
-          if (_context.Courses == null)
-          {
-              return NotFound();
-          }
-            return await _context.Courses.ToListAsync();
+            var Courses = await _courseServices.GetAllCourses();
+            if (Courses == null)
+            {
+                return NotFound();
+            }
+            return Ok(Courses);
         }
 
         // GET: api/Courses/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Course>> GetCourse(int id)
+        public async Task<ActionResult<Course>> GetCourse(Guid id)
         {
-          if (_context.Courses == null)
-          {
-              return NotFound();
-          }
-            var course = await _context.Courses.FindAsync(id);
-
+            var course = await _courseServices.GetCoursesById(id);
             if (course == null)
             {
                 return NotFound();
             }
-
             return course;
         }
 
@@ -51,32 +47,11 @@ namespace StudioAdminData.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
-        public async Task<IActionResult> PutCourse(int id, Course course)
+        public async Task<IActionResult> PutCourse(Course course)
         {
-            if (id != course.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(course).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CourseExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            if (await _courseServices.Update(course)) { return Ok(); }
+            else if (await _courseServices.GetCoursesById(course.Id) == null) { return NotFound(); }
+            else { return NoContent(); }
         }
 
         // POST: api/Courses
@@ -85,40 +60,25 @@ namespace StudioAdminData.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
         public async Task<ActionResult<Course>> PostCourse(Course course)
         {
-          if (_context.Courses == null)
-          {
-              return Problem("Entity set 'StudioAdminDBContext.Courses'  is null.");
-          }
-            _context.Courses.Add(course);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCourse", new { id = course.Id }, course);
+            if (await _courseServices.Insert(course))
+            {
+                return Ok(course);
+            }
+            else {
+                return NoContent();
+            }            
         }
 
         // DELETE: api/Courses/5
         [HttpDelete("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
-        public async Task<IActionResult> DeleteCourse(int id)
+        public async Task<IActionResult> DeleteCourse(Guid id)
         {
-            if (_context.Courses == null)
+            if (await _courseServices.Delete(id))
             {
-                return NotFound();
+                return Ok();
             }
-            var course = await _context.Courses.FindAsync(id);
-            if (course == null)
-            {
-                return NotFound();
-            }
-
-            _context.Courses.Remove(course);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool CourseExists(int id)
-        {
-            return (_context.Courses?.Any(e => e.Id == id)).GetValueOrDefault();
+            return NotFound();
         }
     }
 }

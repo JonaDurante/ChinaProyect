@@ -31,7 +31,7 @@ namespace StudioAdminData.Controllers
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<User>> GetUser(Guid id)
         {
           if (_context.Users == null)
           {
@@ -51,7 +51,7 @@ namespace StudioAdminData.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutUser(Guid id, User user)
         {
             if (id != user.Id)
             {
@@ -98,7 +98,7 @@ namespace StudioAdminData.Controllers
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(Guid id)
         {
             if (_context.Users == null)
             {
@@ -116,7 +116,7 @@ namespace StudioAdminData.Controllers
             return NoContent();
         }
 
-        private bool UserExists(int id)
+        private bool UserExists(Guid id)
         {
             return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
         }

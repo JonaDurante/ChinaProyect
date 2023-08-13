@@ -1,6 +1,6 @@
 ﻿using StudioAdminData.Models.DataModels.Business;
 
-namespace StudioAdminData.Services
+namespace StudioAdminData.Interfaces
 {
     public interface IUserService
     {

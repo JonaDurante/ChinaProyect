@@ -1,14 +1,15 @@
 ﻿using StudioAdminData.DataAcces;
+using StudioAdminData.Interfaces;
 using StudioAdminData.Models.DataModels.Business;
 
 namespace StudioAdminData.Services
 {
-    public class StudentServices : IStudentServices
+    public class ThirdServices : IThirdServices
     {
         private readonly StudioAdminDBContext _context;
         private readonly ICourseServices _courseServices;
 
-        public StudentServices(StudioAdminDBContext context, ICourseServices courseServices)
+        public ThirdServices(StudioAdminDBContext context, ICourseServices courseServices)
         {
             _context = context;
             _courseServices = courseServices;

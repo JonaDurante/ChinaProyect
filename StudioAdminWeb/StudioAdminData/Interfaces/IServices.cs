@@ -1,4 +1,4 @@
-﻿namespace StudioAdminData.Services
+﻿namespace StudioAdminData.Interfaces
 {
     public interface IServices
     {

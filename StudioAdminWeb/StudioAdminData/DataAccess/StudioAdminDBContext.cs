@@ -9,18 +9,18 @@ namespace StudioAdminData.DataAcces
         {
             
         }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<ActivityValue>(entity =>
-            {
-                entity.HasNoKey();
+        //    modelBuilder.Entity<ActivityValue>(entity =>
+        //    {
+        //        entity.HasNoKey();
 
-            });
+        //    });
 
-            // Aquí puedes agregar más configuraciones de entidades, relaciones, índices, etc.
-        }
+        //    // Aquí puedes agregar más configuraciones de entidades, relaciones, índices, etc.
+        //}
 
         public DbSet<ActivityValue> ActivityValues { get; set; }
         public DbSet<Course> Courses { get; set; }

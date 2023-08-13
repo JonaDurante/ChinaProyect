@@ -24,11 +24,11 @@ namespace StudioAdminData.Migrations
 
             modelBuilder.Entity("CourseThird", b =>
                 {
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("CourseId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("ThirdId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ThirdId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("CourseId", "ThirdId");
 
@@ -39,25 +39,28 @@ namespace StudioAdminData.Migrations
 
             modelBuilder.Entity("StudioAdminData.Models.DataModels.Business.ActivityValue", b =>
                 {
+                    b.Property<int>("Quantity")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Quantity"));
+
                     b.Property<decimal>("ProfessorValue")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("StudenValue")
                         .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Quantity");
 
                     b.ToTable("ActivityValues");
                 });
 
             modelBuilder.Entity("StudioAdminData.Models.DataModels.Business.Course", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -105,11 +108,9 @@ namespace StudioAdminData.Migrations
 
             modelBuilder.Entity("StudioAdminData.Models.DataModels.Business.Third", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -147,8 +148,8 @@ namespace StudioAdminData.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -159,11 +160,9 @@ namespace StudioAdminData.Migrations
 
             modelBuilder.Entity("StudioAdminData.Models.DataModels.Business.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");

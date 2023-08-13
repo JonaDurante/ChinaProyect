@@ -1,5 +1,6 @@
 ﻿using StudioAdminData.Models.DataModels;
 using StudioAdminData.DataAcces;
+using StudioAdminData.Interfaces;
 
 namespace StudioAdminData.Services
 {

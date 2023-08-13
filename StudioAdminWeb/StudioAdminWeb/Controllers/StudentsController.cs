@@ -31,34 +31,34 @@ namespace StudioAdminData.Controllers
 
         // GET: api/Thirds/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Third>> GetStudent(int id)
+        public async Task<ActionResult<Third>> GetStudent(Guid id)
         {
           if (_context.Thirds == null)
           {
               return NotFound();
           }
-            var student = await _context.Thirds.FindAsync(id);
+            var third = await _context.Thirds.FindAsync(id);
 
-            if (student == null)
+            if (third == null)
             {
                 return NotFound();
             }
 
-            return student;
+            return third;
         }
 
         // PUT: api/Thirds/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
-        public async Task<IActionResult> PutStudent(int id, Third student)
+        public async Task<IActionResult> PutStudent(Guid id, Third third)
         {
-            if (id != student.Id)
+            if (id != third.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(student).State = EntityState.Modified;
+            _context.Entry(third).State = EntityState.Modified;
 
             try
             {
@@ -83,40 +83,40 @@ namespace StudioAdminData.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
-        public async Task<ActionResult<Third>> PostStudent(Third student)
+        public async Task<ActionResult<Third>> PostStudent(Third third)
         {
           if (_context.Thirds == null)
           {
               return Problem("Entity set 'StudioAdminDBContext.Thirds'  is null.");
           }
-            _context.Thirds.Add(student);
+            _context.Thirds.Add(third);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetStudent", new { id = student.Id }, student);
+            return CreatedAtAction("GetStudent", new { id = third.Id }, third);
         }
 
         // DELETE: api/Thirds/5
         [HttpDelete("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
-        public async Task<IActionResult> DeleteStudent(int id)
+        public async Task<IActionResult> DeleteStudent(Guid id)
         {
             if (_context.Thirds == null)
             {
                 return NotFound();
             }
-            var student = await _context.Thirds.FindAsync(id);
-            if (student == null)
+            var third = await _context.Thirds.FindAsync(id);
+            if (third == null)
             {
                 return NotFound();
             }
 
-            _context.Thirds.Remove(student);
+            _context.Thirds.Remove(third);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool StudentExists(int id)
+        private bool StudentExists(Guid id)
         {
             return (_context.Thirds?.Any(e => e.Id == id)).GetValueOrDefault();
         }

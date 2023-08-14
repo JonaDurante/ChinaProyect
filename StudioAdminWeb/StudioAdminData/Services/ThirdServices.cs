@@ -28,13 +28,13 @@ namespace StudioAdminData.Services
         {
             var CoursesWithStudents = _courseServices.GetCoursesWhitAnyStudent();
             var Thirds = GetAllEnabledStudents();
-            var StudentsInCourses = CoursesWithStudents.SelectMany(c => c.Thirds).ToList();
+            var StudentsInCourses = CoursesWithStudents.Result.SelectMany(c => c.Thirds).ToList();
             var StudentsWithoutCourses = Thirds.Where(s => !StudentsInCourses.Contains(s)).ToList();
             return StudentsWithoutCourses;
         }
 
-        public ICollection<Third> GetStudentsByCourseName(string CourseName) {
-            return _courseServices.GetCoursesByName(CourseName).Thirds;
+        public  ICollection<Third> GetStudentsByCourseName(string CourseName) {
+            return _courseServices.GetCoursesByName(CourseName).Result.Thirds;
         }
 
    

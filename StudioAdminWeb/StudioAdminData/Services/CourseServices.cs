@@ -68,7 +68,7 @@ namespace StudioAdminData.Services
             _context.Entry(course).State = EntityState.Modified;
             try
             {
-                result = await _context.SaveChangesAsync() != 1 ? false : true;
+                result = await _context.SaveChangesAsync() > 0 ? true : false;
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -90,7 +90,7 @@ namespace StudioAdminData.Services
             try
             {
                 _context.Courses.Add(course);
-                result = await _context.SaveChangesAsync() == 1 ? true : false;
+                result = await _context.SaveChangesAsync() > 0 ? true : false;
             }
             catch (Exception)
             {

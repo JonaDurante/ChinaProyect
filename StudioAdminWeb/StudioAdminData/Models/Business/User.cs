@@ -1,7 +1,7 @@
-﻿using StudioAdminData.Models.DataModels.Abstract;
+﻿using StudioAdminData.Models.Abstract;
 using System.ComponentModel.DataAnnotations;
 
-namespace StudioAdminData.Models.DataModels.Business
+namespace StudioAdminData.Models.Business
 {
     public class User : BaseEntity
     {
@@ -14,6 +14,6 @@ namespace StudioAdminData.Models.DataModels.Business
         [Required]
         public string Password { get; set; } = string.Empty;
         [Required]
-        public string Roles { get; set; } = string.Empty;
+        public Roles Roles { get; set; } = Roles.User;
     }
 }

@@ -1,8 +1,8 @@
-﻿using StudioAdminData.Models.DataModels.Abstract;
+﻿using StudioAdminData.Models.Abstract;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace StudioAdminData.Models.DataModels.Business
+namespace StudioAdminData.Models.Business
 {
 
     public class Course : BaseEntity

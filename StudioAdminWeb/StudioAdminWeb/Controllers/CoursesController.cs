@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using StudioAdminData.DataAcces;
 using StudioAdminData.Interfaces;
-using StudioAdminData.Models.DataModels.Business;
+using StudioAdminData.Models.Business;
 
 namespace StudioAdminData.Controllers
 {
@@ -23,7 +21,7 @@ namespace StudioAdminData.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
         {
-            var Courses = await _courseServices.GetAllCourses();
+            var Courses = await _courseServices.GetAllCoursesAsync();
             if (Courses == null)
             {
                 return NotFound();
@@ -35,7 +33,7 @@ namespace StudioAdminData.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Course>> GetCourse(Guid id)
         {
-            var course = await _courseServices.GetCoursesById(id);
+            var course = await _courseServices.GetCoursesByIdAsync(id);
             if (course == null)
             {
                 return NotFound();
@@ -49,8 +47,8 @@ namespace StudioAdminData.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
         public async Task<IActionResult> PutCourse(Course course)
         {
-            if (await _courseServices.Update(course)) { return Ok(); }
-            else if (await _courseServices.GetCoursesById(course.Id) == null) { return NotFound(); }
+            if (await _courseServices.UpdateAsync(course)) { return Ok(); }
+            else if (await _courseServices.GetCoursesByIdAsync(course.Id) == null) { return NotFound(); }
             else { return NoContent(); }
         }
 
@@ -60,7 +58,7 @@ namespace StudioAdminData.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
         public async Task<ActionResult<Course>> PostCourse(Course course)
         {
-            if (await _courseServices.Insert(course))
+            if (await _courseServices.InsertAsync(course))
             {
                 return Ok(course);
             }
@@ -74,7 +72,7 @@ namespace StudioAdminData.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
         public async Task<IActionResult> DeleteCourse(Guid id)
         {
-            if (await _courseServices.Delete(id))
+            if (await _courseServices.DeleteAsync(id))
             {
                 return Ok();
             }

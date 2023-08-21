@@ -1,4 +1,4 @@
-﻿namespace StudioAdminData.Models.DataModels.Business
+﻿namespace StudioAdminData.Models.Business
 {
     public enum Level
     {

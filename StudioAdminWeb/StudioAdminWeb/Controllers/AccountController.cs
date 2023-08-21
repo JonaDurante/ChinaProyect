@@ -3,8 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StudioAdminData.DataAcces;
 using StudioAdminData.Helppers;
-using StudioAdminData.Models.DataModels.JWT;
-using StudioAdminData.Models.DataModels.Loggin;
+using StudioAdminData.Interfaces;
+using StudioAdminData.Models.JWT;
+using StudioAdminData.Models.Loggin;
 
 namespace StudioAdminData.Controllers
 {
@@ -13,27 +14,24 @@ namespace StudioAdminData.Controllers
     public class AccountController : ControllerBase
     {
         private readonly JwtSettings _jwtSettings;
-        private readonly StudioAdminDBContext _context;
+        private readonly IUserService _userServices;
 
-        public AccountController(JwtSettings jwtSettings, StudioAdminDBContext context)
+        public AccountController(JwtSettings jwtSettings, StudioAdminDBContext context, IUserService userServices)
         {
             _jwtSettings = jwtSettings;
-            _context = context;
+            _userServices = userServices;
         }
 
         [HttpPost]
-        public IActionResult GetToken(UserLoggin userLoggin)
+        public async Task<IActionResult> GetToken(UserLoggin userLoggin)
         {
             try
             {
-
                 var Token = new UserToken();
-                var searchUser = _context.Users
-                    .Where(us =>us.Name == userLoggin.UserName && us.Password == userLoggin.Password)
-                    .FirstOrDefault();
-
+                var searchUser = await _userServices.ValidateUserAsync(userLoggin);
                 if (searchUser != null)
                 {
+                    JwtHelppers.Initialize(_userServices);
                     Token = JwtHelppers.GenerateTokenKey(new UserToken()
                     {
                         UserName = searchUser.Name,
@@ -56,9 +54,9 @@ namespace StudioAdminData.Controllers
 
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
-        public IActionResult GetUsersList()
+        public async Task<IActionResult> GetUsersList()
         { 
-            return Ok(_context.Users.Where(x => x.IsDeleted == false).ToList());
+            return Ok(await _userServices.GetAllAsync());
         }
 
     }

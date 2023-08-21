@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StudioAdminData.Models.DataModels.Business;
+using StudioAdminData.Models.Business;
 
 namespace StudioAdminData.DataAcces
 {

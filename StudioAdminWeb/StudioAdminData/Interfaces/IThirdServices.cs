@@ -1,4 +1,4 @@
-﻿using StudioAdminData.Models.DataModels.Business;
+﻿using StudioAdminData.Models.Business;
 
 namespace StudioAdminData.Interfaces
 {

@@ -1,33 +1,34 @@
-﻿using StudioAdminData.DataAcces;
+﻿using Microsoft.EntityFrameworkCore;
+using StudioAdminData.DataAcces;
 using StudioAdminData.Interfaces;
-using StudioAdminData.Models.DataModels.Business;
+using StudioAdminData.Models.Business;
 
 namespace StudioAdminData.Services
 {
     public class ActivityValueService : IActivityValueService
     {
         private readonly StudioAdminDBContext _context;
-        public ActivityValueService(StudioAdminDBContext context, ICourseServices courseServices)
+        public ActivityValueService(StudioAdminDBContext context)
         {
             _context = context;
         }
 
-        public List<ActivityValue> GetAllValues() {
-            var ActividyAndValue = from activities in _context.ActivityValues
-                                   select activities;
-            return ActividyAndValue.ToList(); 
-        }
-        public ActivityValue GetActivityValue(int quantity)
+        public async Task<IEnumerable<ActivityValue>> GetAllValuesAsync()
         {
-            return _context.ActivityValues.Where(a => a.Quantity == quantity).First();
+            var activityValues = await _context.ActivityValues.ToListAsync();
+            return activityValues;
         }
-        public (List<int>, List<decimal>) GetByRoll(Third third) {
+        public async Task<ActivityValue> GetActivityValueAsync(int quantity)
+        {
+            return await _context.ActivityValues.Where(a => a.Quantity == quantity).FirstAsync();
+        }
+        public async Task<(IEnumerable<int>, IEnumerable<decimal>)> GetByRollAsync(Third third) {
 
             var Quantity = new List<int>();
             var Value = new List<decimal>();
-            var ActividyAndValue = GetAllValues();
+            var ActividyAndValue = await GetAllValuesAsync();
             Quantity.AddRange(ActividyAndValue.Select(a => a.Quantity));
-            if (third.User.Roles == "Profesor")
+            if (third.User.Roles == Roles.Medium)
             {
                 Value.AddRange(ActividyAndValue.Select(d => d.ProfessorValue).ToList());
             }else 
@@ -37,9 +38,9 @@ namespace StudioAdminData.Services
             return (Quantity, Value);
         }
 
-        public bool Update(ActivityValue activityValue) {
+        public async Task<bool> UpdateAsync(ActivityValue activityValue) {
             var resultado = false;
-            var ActividyAndValue = GetActivityValue(activityValue.Quantity);
+            var ActividyAndValue = await GetActivityValueAsync(activityValue.Quantity);
             try
             {
                 if (ActividyAndValue != null)
@@ -47,31 +48,53 @@ namespace StudioAdminData.Services
                     ActividyAndValue.Quantity = activityValue.Quantity;
                     ActividyAndValue.ProfessorValue = activityValue.ProfessorValue;
                     ActividyAndValue.StudenValue = activityValue.StudenValue;
-                    resultado = _context.SaveChanges() != 0 ? true : false;
+                    resultado = _context.SaveChanges() != 0;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //guardar error
             }
             return resultado;
         }
 
-        public bool Insert(ActivityValue activityValue) {
+        public async Task<bool> InsertAsync(ActivityValue activityValue) {
             var resultado = false;
             try
             {
                 if (activityValue != null)
                 {
                     _context.Add(activityValue);
-                    resultado = _context.SaveChanges() !=0 ? true : false;
+                    await _context.SaveChangesAsync(); // Espera a que se complete la operación asincrónica
+                    resultado = true;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //guardar error
             }
             return resultado;
+        }
+
+        public async Task<bool> DeletAsync(int ActivityCode)
+        {
+            try
+            {
+                var Activity = await GetActivityValueAsync(ActivityCode);
+                if (Activity == null)
+                {
+                    return false;
+                }
+                _context.ActivityValues.Remove(Activity);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                //guardar error
+                return false;
+            }
+
         }
     }
 

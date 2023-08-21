@@ -1,4 +1,4 @@
-﻿namespace StudioAdminData.Models.DataModels.JWT
+﻿namespace StudioAdminData.Models.JWT
 {
     public class UserToken
     {

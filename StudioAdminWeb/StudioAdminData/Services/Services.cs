@@ -1,4 +1,4 @@
-﻿using StudioAdminData.Models.DataModels;
+﻿using StudioAdminData.Models;
 using StudioAdminData.DataAcces;
 using StudioAdminData.Interfaces;
 

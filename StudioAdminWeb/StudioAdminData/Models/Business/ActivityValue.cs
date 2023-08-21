@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StudioAdminData.Models.DataModels.Business
+namespace StudioAdminData.Models.Business
 {
     public class ActivityValue
     {

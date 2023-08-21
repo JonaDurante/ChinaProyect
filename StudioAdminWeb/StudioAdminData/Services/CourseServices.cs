@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using StudioAdminData.DataAcces;
 using StudioAdminData.Interfaces;
-using StudioAdminData.Models.DataModels.Business;
+using StudioAdminData.Models.Business;
 
 namespace StudioAdminData.Services
 {
@@ -14,65 +14,65 @@ namespace StudioAdminData.Services
         {
             _context = context;
         }
-        public async Task<IEnumerable<Course>> GetCoursesWhitAnyStudent()
+        public async Task<IEnumerable<Course>> GetCoursesWhitAnyStudentAsync()
         {
             return await _context.Courses.Where(x => /*x.Level == Level.Medium &&*/ x.Thirds.Any()).ToListAsync();
         }
-        public async Task<IEnumerable<Course>> GetCoursesByLevel()
+        public async Task<IEnumerable<Course>> GetCoursesByLevelAsync()
         {
             return await _context.Courses.Where(x => x.Level == Level.Expert /*&& x.Categories.Any(y => y.Name.Contains("Filosofía"))*/).ToListAsync();
         }
-        public async Task<IEnumerable<Course>> GetEmptyCourses()
+        public async Task<IEnumerable<Course>> GetEmptyCoursesAsync()
         {
             return await _context.Courses.Where(x => !x.Thirds.Any()).ToListAsync();
         }
-        public async Task<IEnumerable<Course>> GetAllCoursesByCategory(string CategoryName)
+        public async Task<IEnumerable<Course>> GetAllCoursesByCategoryAsync(string CategoryName)
         {
             //var ConcretCategory = _categoryServices.GetCategoryByName(CategoryName);
             return await _context.Courses.Where(x => x.Name == "").ToListAsync();
         }
 
-        public async Task<IEnumerable<Course>> GetAllCoursesWithoutChapter()
+        public async Task<IEnumerable<Course>> GetAllCoursesWithoutChapterAsync()
         {
             return await _context.Courses.Where(x => x.Name == null).ToListAsync();
         }
 
-        public async Task<Course> GetCoursesByName(string CourseName)
+        public async Task<Course> GetCoursesByNameAsync(string CourseName)
         {
             return await _context.Courses.Where(x => x.Name == CourseName).FirstAsync();
         }
 
-        public string GetTemario(string CourseName)
+        public string GetTemarioAsync(string CourseName)
         {
-            return GetCoursesByName(CourseName).Result.Description;
+            return GetCoursesByNameAsync(CourseName).Result.Description;
         }
 
-        public async Task<IEnumerable<Course>> GetCoursesByStudent(Course Third)
+        public async Task<IEnumerable<Course>> GetCoursesByStudentAsync(Course Third)
         {
             return await _context.Courses.Where(x => x.Thirds == Third).ToListAsync();
         }
 
-        public async Task<IEnumerable<Course>> GetAllCourses()
+        public async Task<IEnumerable<Course>> GetAllCoursesAsync()
         {
             return await _context.Courses.Where(x => x.IsDeleted != false).ToListAsync();
         }
 
-        public async Task<Course> GetCoursesById(Guid Id)
+        public async Task<Course> GetCoursesByIdAsync(Guid Id)
         {
             return await _context.Courses.Where(x => x.Id == Id).FirstAsync();
         }
 
-        public async Task<bool> Update(Course course)
+        public async Task<bool> UpdateAsync(Course course)
         {
             var result = false;
             _context.Entry(course).State = EntityState.Modified;
             try
             {
-                result = await _context.SaveChangesAsync() > 0 ? true : false;
+                result = await _context.SaveChangesAsync() > 0;
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (GetCoursesById(course.Id) != null)
+                if (GetCoursesByIdAsync(course.Id) != null)
                 {
                     return result;
                 }
@@ -84,13 +84,13 @@ namespace StudioAdminData.Services
             return result;
         }
 
-        public async Task<bool> Insert(Course course)
+        public async Task<bool> InsertAsync(Course course)
         {
             var result = false;
             try
             {
                 _context.Courses.Add(course);
-                result = await _context.SaveChangesAsync() > 0 ? true : false;
+                result = await _context.SaveChangesAsync() > 0;
             }
             catch (Exception)
             {
@@ -100,7 +100,7 @@ namespace StudioAdminData.Services
 
         }
 
-        public async Task<bool> Delete(Guid Id)
+        public async Task<bool> DeleteAsync(Guid Id)
         {
             var course = await _context.Courses.FindAsync(Id);
             if (course == null)

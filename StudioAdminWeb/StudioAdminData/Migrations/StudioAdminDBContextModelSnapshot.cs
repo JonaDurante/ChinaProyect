@@ -37,7 +37,7 @@ namespace StudioAdminData.Migrations
                     b.ToTable("CourseThird");
                 });
 
-            modelBuilder.Entity("StudioAdminData.Models.DataModels.Business.ActivityValue", b =>
+            modelBuilder.Entity("StudioAdminData.Models.Business.ActivityValue", b =>
                 {
                     b.Property<int>("Quantity")
                         .ValueGeneratedOnAdd()
@@ -56,7 +56,7 @@ namespace StudioAdminData.Migrations
                     b.ToTable("ActivityValues");
                 });
 
-            modelBuilder.Entity("StudioAdminData.Models.DataModels.Business.Course", b =>
+            modelBuilder.Entity("StudioAdminData.Models.Business.Course", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -106,7 +106,7 @@ namespace StudioAdminData.Migrations
                     b.ToTable("Courses");
                 });
 
-            modelBuilder.Entity("StudioAdminData.Models.DataModels.Business.Third", b =>
+            modelBuilder.Entity("StudioAdminData.Models.Business.Third", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -158,7 +158,7 @@ namespace StudioAdminData.Migrations
                     b.ToTable("Thirds");
                 });
 
-            modelBuilder.Entity("StudioAdminData.Models.DataModels.Business.User", b =>
+            modelBuilder.Entity("StudioAdminData.Models.Business.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -199,9 +199,8 @@ namespace StudioAdminData.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Roles")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Roles")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -217,22 +216,22 @@ namespace StudioAdminData.Migrations
 
             modelBuilder.Entity("CourseThird", b =>
                 {
-                    b.HasOne("StudioAdminData.Models.DataModels.Business.Third", null)
+                    b.HasOne("StudioAdminData.Models.Business.Third", null)
                         .WithMany()
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("StudioAdminData.Models.DataModels.Business.Course", null)
+                    b.HasOne("StudioAdminData.Models.Business.Course", null)
                         .WithMany()
                         .HasForeignKey("ThirdId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("StudioAdminData.Models.DataModels.Business.Third", b =>
+            modelBuilder.Entity("StudioAdminData.Models.Business.Third", b =>
                 {
-                    b.HasOne("StudioAdminData.Models.DataModels.Business.User", "User")
+                    b.HasOne("StudioAdminData.Models.Business.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

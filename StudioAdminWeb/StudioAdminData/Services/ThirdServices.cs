@@ -1,6 +1,6 @@
 ﻿using StudioAdminData.DataAcces;
 using StudioAdminData.Interfaces;
-using StudioAdminData.Models.DataModels.Business;
+using StudioAdminData.Models.Business;
 
 namespace StudioAdminData.Services
 {
@@ -26,7 +26,7 @@ namespace StudioAdminData.Services
         }
         public List<Third> GetAllStudentWithOutCourses()
         {
-            var CoursesWithStudents = _courseServices.GetCoursesWhitAnyStudent();
+            var CoursesWithStudents = _courseServices.GetCoursesWhitAnyStudentAsync();
             var Thirds = GetAllEnabledStudents();
             var StudentsInCourses = CoursesWithStudents.Result.SelectMany(c => c.Thirds).ToList();
             var StudentsWithoutCourses = Thirds.Where(s => !StudentsInCourses.Contains(s)).ToList();
@@ -34,7 +34,7 @@ namespace StudioAdminData.Services
         }
 
         public  ICollection<Third> GetStudentsByCourseName(string CourseName) {
-            return _courseServices.GetCoursesByName(CourseName).Result.Thirds;
+            return _courseServices.GetCoursesByNameAsync(CourseName).Result.Thirds;
         }
 
    

@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using StudioAdminData.DataAcces;
 using StudioAdminData.Interfaces;
-using StudioAdminData.Models.DataModels.Business;
+using StudioAdminData.Models.Business;
+using StudioAdminData.Models.Loggin;
 
 namespace StudioAdminData.Services
 {
@@ -16,29 +16,19 @@ namespace StudioAdminData.Services
             _context = context;
             _courseServices = courseServices;
         }
-
-        public User GetByMAil(string Email)
-        {
-            return _context.Users.Where(x => x.Email == Email).First();
-        }
-
-        public List<User> GetUserWhitOutCourses()
-        {
-            var Users = _context.Users.Where(x => !x.IsDeleted == false).ToList();
-            var Curses = _courseServices.GetCoursesWhitAnyStudent();
-            return Users;
-        }
-
-        public async Task<List<User>> GetAll()
+        public async Task<List<User>> GetAllAsync()
         {
             return await _context.Users.Where(x => x.IsDeleted == false).ToListAsync();
         }
-        public async Task<User> GetById(Guid Id)
+        public async Task<User> GetByIdAsync(Guid Id)
         {
             return await _context.Users.Where(x => x.Id == Id && x.IsDeleted == false).FirstAsync();
+        }        
+        public User GetById(Guid Id)
+        {
+            return _context.Users.Where(x => x.Id == Id && x.IsDeleted == false).First();
         }
-
-        public async Task<bool> Update(User user)
+        public async Task<bool> UpdateAsync(User user)
         {
             _context.Entry(user).State = EntityState.Modified;
             var result = false;
@@ -50,7 +40,7 @@ namespace StudioAdminData.Services
             {
                 //guardar en db
 
-                //if (!UserExists(id))
+                //if (!UserExistsAsync(id))
                 //{
                 //    return NotFound();
                 //}
@@ -61,21 +51,24 @@ namespace StudioAdminData.Services
             }
             return result;
         }
-
-        public async Task<bool> Insert(User user) {
+        public async Task<bool> InsertAsync(User user)
+        {
             _context.Users.Add(user);
             return await _context.SaveChangesAsync() > 0 ? true : false;
 
         }
-        public async Task<bool> Delete(User user)
+        public async Task<bool> DeleteAsync(User user)
         {
             _context.Users.Remove(user);
             return await _context.SaveChangesAsync() > 0 ? true : false;
         }
-
-        public bool UserExists(Guid id)
+        public async Task<bool> UserExistsAsync(Guid id)
         {
-            return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
+            return await _context.Users?.AnyAsync(e => e.Id == id);
+        }
+        public async Task<User> ValidateUserAsync(UserLoggin userLoggin)
+        {
+            return await _context.Users?.FirstOrDefaultAsync(us => us.Name == userLoggin.UserName && us.Password == userLoggin.Password);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StudioAdminData.Models.DataModels.Abstract
+namespace StudioAdminData.Models.Abstract
 {
     public abstract class BaseEntity
     {

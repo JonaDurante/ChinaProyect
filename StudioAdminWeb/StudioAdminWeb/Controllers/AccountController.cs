@@ -14,11 +14,9 @@ namespace StudioAdminData.Controllers
     {
         private readonly JwtSettings _jwtSettings;
         private readonly IUserService _userServices;
-<<<<<<< Updated upstream
-        public AccountController(JwtSettings jwtSettings, StudioAdminDBContext context)
-=======
+ 
         public AccountController(JwtSettings jwtSettings, IUserService userServices)
->>>>>>> Stashed changes
+ 
         {
             _jwtSettings = jwtSettings;
             _userServices = userServices;
@@ -33,7 +31,6 @@ namespace StudioAdminData.Controllers
                 var searchUser = await _userServices.ValidateUserAsync(userLoggin);
                 if (searchUser != null)
                 {
-                    JwtHelppers.Initialize(_userServices);
                     Token = JwtHelppers.GenerateTokenKey(new UserToken()
                     {
                         UserName = searchUser.Name,

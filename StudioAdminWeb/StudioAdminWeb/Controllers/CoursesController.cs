@@ -21,11 +21,11 @@ namespace StudioAdminData.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
         {
-<<<<<<< Updated upstream
+
             var Courses = await _courseServices.GetAllCourses();
-=======
+ 
             var Courses = await _courseServices.GetAllAsync();
->>>>>>> Stashed changes
+ 
             if (Courses == null)
             {
                 return NotFound();
@@ -37,11 +37,11 @@ namespace StudioAdminData.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Course>> GetCourse(Guid id)
         {
-<<<<<<< Updated upstream
+
             var course = await _courseServices.GetCoursesById(id);
-=======
+ 
             var course = await _courseServices.GetByIdAsync(id);
->>>>>>> Stashed changes
+ 
             if (course == null)
             {
                 return NotFound();
@@ -55,13 +55,13 @@ namespace StudioAdminData.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
         public async Task<IActionResult> PutCourse(Course course)
         {
-<<<<<<< Updated upstream
+
             if (await _courseServices.Update(course)) { return Ok(); }
             else if (await _courseServices.GetCoursesById(course.Id) == null) { return NotFound(); }
-=======
+ 
             if (await _courseServices.UpdateAsync(course)) { return Ok(); }
             else if (await _courseServices.GetByIdAsync(course.Id) == null) { return NotFound(); }
->>>>>>> Stashed changes
+ 
             else { return NoContent(); }
         }
 

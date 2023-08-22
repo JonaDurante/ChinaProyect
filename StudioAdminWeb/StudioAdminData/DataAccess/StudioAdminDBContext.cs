@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-<<<<<<< Updated upstream
-using StudioAdminData.Models.DataModels.Business;
-=======
-using StudioAdminData.Models.Abstract;
 using StudioAdminData.Models.Business;
->>>>>>> Stashed changes
 
 namespace StudioAdminData.DataAcces
 {

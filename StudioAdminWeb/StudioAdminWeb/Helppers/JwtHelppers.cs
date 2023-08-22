@@ -1,10 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-<<<<<<< Updated upstream
-using StudioAdminData.Models.DataModels.JWT;
-=======
 using StudioAdminData.Models.Business;
 using StudioAdminData.Models.JWT;
->>>>>>> Stashed changes
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -13,10 +9,7 @@ namespace StudioAdminData.Helppers
 {
     public static class JwtHelppers
     {
-<<<<<<< Updated upstream
-=======
         private static Roles CurrentRol { get; set; }
->>>>>>> Stashed changes
         public static IEnumerable<Claim> GetClaims(this UserToken UserAcounts, Guid Id)
         {
             var claims = new List<Claim>
@@ -27,25 +20,22 @@ namespace StudioAdminData.Helppers
                 new Claim(ClaimTypes.NameIdentifier, Id.ToString()),
                 new Claim(ClaimTypes.Expiration, DateTime.Now.AddDays(1).ToString("MMM ddd dd yyyy HH:mm:ss tt"))
             };
-<<<<<<< Updated upstream
-
-            if (UserAcounts.UserName == "Karo")
-=======
             switch (CurrentRol)
->>>>>>> Stashed changes
             {
-                claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+                case Roles.Admin:
+                    claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+                    break;
+                case Roles.Medium:
+                    claims.Add(new Claim(ClaimTypes.Role, "Medium"));
+                    break;
+                default:
+                    claims.Add(new Claim(ClaimTypes.Role, "User")); // usuario básico
+                    break;
             }
-            else 
-            {
-                claims.Add(new Claim(ClaimTypes.Role, "User")); // usuario básico
-                claims.Add(new Claim("UserOnly", "User 1")); 
-            }
-
             return claims;
         }
 
-        public static IEnumerable<Claim> GetClaims(this UserToken UserAcounts, out Guid Id) 
+        public static IEnumerable<Claim> GetClaims(this UserToken UserAcounts, out Guid Id)
         {
             Id = Guid.NewGuid();
             return GetClaims(UserAcounts, Id);
@@ -58,21 +48,20 @@ namespace StudioAdminData.Helppers
                 CurrentRol = currentRol;
                 var UserToken = new UserToken();
                 if (model == null)
-                { 
+                {
                     throw new ArgumentNullException(nameof(model));
                 }
                 // Obtener Clave Secreta
                 var Key = System.Text.Encoding.ASCII.GetBytes(jwtSettings.IsUserSigninKey);
-                Guid Id;
                 // Expira en un día
-                DateTime expiredTime = DateTime.Now.AddDays(1); 
+                DateTime expiredTime = DateTime.Now.AddDays(1);
                 // Validez
                 UserToken.Validity = expiredTime.TimeOfDay;
                 // Genero JWT de
                 var jwtToken = new JwtSecurityToken(
                     issuer: jwtSettings.ValidIsUser,
                     audience: jwtSettings.ValidAudience,
-                    claims: GetClaims(model, out Id),
+                    claims: GetClaims(model, out Guid Id),
                     notBefore: new DateTimeOffset(DateTime.Now).DateTime,
                     expires: new DateTimeOffset(expiredTime).DateTime,
                     signingCredentials: new SigningCredentials(

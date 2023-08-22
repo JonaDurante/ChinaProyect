@@ -44,7 +44,7 @@ namespace StudioAdminData.Services
         public async Task<bool> DeleteAsync(Guid Id)
         {
             return await _commonContext.DeleteAsync(Id);
->>>>>>> Stashed changes
+ 
         }
     }
 }

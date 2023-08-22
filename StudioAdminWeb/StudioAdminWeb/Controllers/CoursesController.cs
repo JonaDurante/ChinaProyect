@@ -48,8 +48,8 @@ namespace StudioAdminData.Controllers
         public async Task<IActionResult> PutCourse(Course course)
         {
 
-            if (await _courseServices.Update(course)) { return Ok(); }
-            else if (await _courseServices.GetCoursesById(course.Id) == null) { return NotFound(); }
+            if (await _courseServices.UpdateAsync(course)) { return Ok(); }
+            else if (await _courseServices.GetByIdAsync(course.Id) == null) { return NotFound(); }
  
             if (await _courseServices.UpdateAsync(course)) { return Ok(); }
             else if (await _courseServices.GetByIdAsync(course.Id) == null) { return NotFound(); }

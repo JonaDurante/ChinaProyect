@@ -28,7 +28,7 @@ namespace StudioAdminData.Services
         {
             return _context.Users.Where(u => u.Id == Id).FirstOrDefault();
         }
-        public async Task<bool> InsertAsync(User user)
+        public async Task<bool> UpdateAsync(User user)
         {
             return await _commonContext.UpdateAsync(user);
         }

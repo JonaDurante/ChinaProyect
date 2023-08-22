@@ -23,7 +23,7 @@ namespace StudioAdminData.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            var Users = await _userService.GetAll();
+            var Users = await _userService.GetAllAsync();
             if (Users == null)
             {
                 return NotFound();
@@ -35,7 +35,7 @@ namespace StudioAdminData.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(Guid id)
         {
-            var user = await _userService.GetById(id);
+            var user = await _userService.GetByIdAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -49,12 +49,12 @@ namespace StudioAdminData.Controllers
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> PutUser(Guid id, User user)
         {
-            if (!_userService.UserExists(id))
+            if (! await _userService.UserExistsAsync(id))
             {
                 return NotFound();
             }
 
-            if (await _userService.Update(user))
+            if (await _userService.UpdateAsync(user))
             {
                 return Ok(user.Id);
             }
@@ -71,7 +71,7 @@ namespace StudioAdminData.Controllers
         public async Task<ActionResult<User>> PostUser(User user)
         {
 
-            if (await _userService.Insert(user))
+            if (await _userService.InsertAsync(user))
             {
                 return CreatedAtAction("GetUser", new { id = user.Id }, user);
             }
@@ -83,7 +83,7 @@ namespace StudioAdminData.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(Guid id)
         {
-            var user = await _userService.GetById(id);
+            var user = await _userService.GetByIdAsync(id);
             if (user == null)
             {
                 return NotFound();

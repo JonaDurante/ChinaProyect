@@ -7,36 +7,44 @@ namespace StudioAdminData.Services
     public class ThirdServices : IThirdServices
     {
         private readonly StudioAdminDBContext _context;
-        private readonly ICourseServices _courseServices;
+        private readonly ICommonServices<Third> _commonContext;
 
-        public ThirdServices(StudioAdminDBContext context, ICourseServices courseServices)
+        public ThirdServices(StudioAdminDBContext context, ICommonServices<Third> commonContext)
         {
             _context = context;
-            _courseServices = courseServices;
+            _commonContext = commonContext;
         }
 
-        public List<Third> GetStudentByAge()
+        public async Task<IEnumerable<Third>> GetAllAsync()
+        {
+            return await _commonContext.GetAllAsync();
+        }
+        public async Task<Third> GetByIdAsync(Guid Id)
+        {
+            return await _commonContext.GetByIdAsync(Id);
+        }
+        public IEnumerable<Third> GetByAge(int age)
         {
             var actualDate = DateTime.Today;
-            return _context.Thirds.Where(x => (actualDate - x.DateOfBirthday).TotalDays / 365.25 > 18).ToList();
+            return _context.Thirds.Where(x => (actualDate - x.DateOfBirthday).TotalDays / 365.25 > age).ToList();
         }
-        public List<Third> GetAllEnabledStudents()
+        public IEnumerable<Third> GetAllEnabledStudents()
         {
             return _context.Thirds.Where(x => x.IsDeleted == false).ToList();
         }
-        public List<Third> GetAllStudentWithOutCourses()
+        public async Task<bool> InsertAsync(Third third)
         {
-            var CoursesWithStudents = _courseServices.GetCoursesWhitAnyStudentAsync();
-            var Thirds = GetAllEnabledStudents();
-            var StudentsInCourses = CoursesWithStudents.Result.SelectMany(c => c.Thirds).ToList();
-            var StudentsWithoutCourses = Thirds.Where(s => !StudentsInCourses.Contains(s)).ToList();
-            return StudentsWithoutCourses;
-        }
 
-        public  ICollection<Third> GetStudentsByCourseName(string CourseName) {
-            return _courseServices.GetCoursesByNameAsync(CourseName).Result.Thirds;
+            return await _commonContext.InsertAsync(third);
         }
-
-   
+        public async Task<bool> UpdateAsync(Third third)
+        {
+            return await _commonContext.UpdateAsync(third);
+        }
+        public async Task<bool> DeleteAsync(Guid Id)
+        {
+            return await _commonContext.DeleteAsync(Id);
+>>>>>>> Stashed changes
+        }
     }
 }

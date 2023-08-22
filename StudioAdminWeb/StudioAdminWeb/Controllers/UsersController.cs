@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StudioAdminData.DataAcces;
 using StudioAdminData.Interfaces;
-using StudioAdminData.Models.Business;
+using StudioAdminData.Models.DataModels.Business;
 
 namespace StudioAdminData.Controllers
 {
@@ -23,7 +23,7 @@ namespace StudioAdminData.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            var Users = await _userService.GetAllAsync();
+            var Users = await _userService.GetAll();
             if (Users == null)
             {
                 return NotFound();
@@ -35,7 +35,7 @@ namespace StudioAdminData.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(Guid id)
         {
-            var user = await _userService.GetByIdAsync(id);
+            var user = await _userService.GetById(id);
             if (user == null)
             {
                 return NotFound();
@@ -49,12 +49,12 @@ namespace StudioAdminData.Controllers
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> PutUser(Guid id, User user)
         {
-            if (!await _userService.UserExistsAsync(id))
+            if (!_userService.UserExists(id))
             {
                 return NotFound();
             }
 
-            if (await _userService.UpdateAsync(user))
+            if (await _userService.Update(user))
             {
                 return Ok(user.Id);
             }
@@ -71,7 +71,7 @@ namespace StudioAdminData.Controllers
         public async Task<ActionResult<User>> PostUser(User user)
         {
 
-            if (await _userService.InsertAsync(user))
+            if (await _userService.Insert(user))
             {
                 return CreatedAtAction("GetUser", new { id = user.Id }, user);
             }
@@ -83,12 +83,16 @@ namespace StudioAdminData.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(Guid id)
         {
-            var user = await _userService.GetByIdAsync(id);
+            var user = await _userService.GetById(id);
             if (user == null)
             {
                 return NotFound();
             }
-            if (await _userService.DeleteAsync(user))
+<<<<<<< Updated upstream
+            if (await _userService.Delete(user))
+=======
+            if (await _userService.DeleteAsync(id))
+>>>>>>> Stashed changes
             { 
                 return NoContent();
             }

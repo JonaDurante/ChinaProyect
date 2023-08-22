@@ -3,76 +3,79 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using StudioAdminData.DataAcces;
 using StudioAdminData.Interfaces;
-using StudioAdminData.Models.Business;
+using StudioAdminData.Models.DataModels.Business;
 
 namespace StudioAdminData.Services
 {
     public class CourseServices : ICourseServices
     {
         private readonly StudioAdminDBContext _context;
-        public CourseServices(StudioAdminDBContext context)
+        private readonly ICommonServices<Course> _commonContext;
+        public CourseServices(StudioAdminDBContext context, ICommonServices<Course> commonContext)
         {
             _context = context;
+<<<<<<< Updated upstream
         }
-        public async Task<IEnumerable<Course>> GetCoursesWhitAnyStudentAsync()
+        public async Task<IEnumerable<Course>> GetCoursesWhitAnyStudent()
         {
             return await _context.Courses.Where(x => /*x.Level == Level.Medium &&*/ x.Thirds.Any()).ToListAsync();
         }
-        public async Task<IEnumerable<Course>> GetCoursesByLevelAsync()
+        public async Task<IEnumerable<Course>> GetCoursesByLevel()
         {
             return await _context.Courses.Where(x => x.Level == Level.Expert /*&& x.Categories.Any(y => y.Name.Contains("Filosofía"))*/).ToListAsync();
         }
-        public async Task<IEnumerable<Course>> GetEmptyCoursesAsync()
+        public async Task<IEnumerable<Course>> GetEmptyCourses()
         {
             return await _context.Courses.Where(x => !x.Thirds.Any()).ToListAsync();
         }
-        public async Task<IEnumerable<Course>> GetAllCoursesByCategoryAsync(string CategoryName)
+        public async Task<IEnumerable<Course>> GetAllCoursesByCategory(string CategoryName)
         {
             //var ConcretCategory = _categoryServices.GetCategoryByName(CategoryName);
             return await _context.Courses.Where(x => x.Name == "").ToListAsync();
         }
 
-        public async Task<IEnumerable<Course>> GetAllCoursesWithoutChapterAsync()
+        public async Task<IEnumerable<Course>> GetAllCoursesWithoutChapter()
         {
-            return await _context.Courses.Where(x => x.Name == null).ToListAsync();
+            return await _commonContext.GetAllAsync();
         }
+<<<<<<< Updated upstream
 
-        public async Task<Course> GetCoursesByNameAsync(string CourseName)
+        public async Task<Course> GetCoursesByName(string CourseName)
         {
             return await _context.Courses.Where(x => x.Name == CourseName).FirstAsync();
         }
 
-        public string GetTemarioAsync(string CourseName)
+        public string GetTemario(string CourseName)
         {
-            return GetCoursesByNameAsync(CourseName).Result.Description;
+            return GetCoursesByName(CourseName).Result.Description;
         }
 
-        public async Task<IEnumerable<Course>> GetCoursesByStudentAsync(Course Third)
+        public async Task<IEnumerable<Course>> GetCoursesByStudent(Course Third)
         {
             return await _context.Courses.Where(x => x.Thirds == Third).ToListAsync();
         }
 
-        public async Task<IEnumerable<Course>> GetAllCoursesAsync()
+        public async Task<IEnumerable<Course>> GetAllCourses()
         {
             return await _context.Courses.Where(x => x.IsDeleted != false).ToListAsync();
         }
 
-        public async Task<Course> GetCoursesByIdAsync(Guid Id)
+        public async Task<Course> GetCoursesById(Guid Id)
         {
             return await _context.Courses.Where(x => x.Id == Id).FirstAsync();
         }
 
-        public async Task<bool> UpdateAsync(Course course)
+        public async Task<bool> Update(Course course)
         {
             var result = false;
             _context.Entry(course).State = EntityState.Modified;
             try
             {
-                result = await _context.SaveChangesAsync() > 0;
+                result = await _context.SaveChangesAsync() > 0 ? true : false;
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (GetCoursesByIdAsync(course.Id) != null)
+                if (GetCoursesById(course.Id) != null)
                 {
                     return result;
                 }
@@ -84,13 +87,13 @@ namespace StudioAdminData.Services
             return result;
         }
 
-        public async Task<bool> InsertAsync(Course course)
+        public async Task<bool> Insert(Course course)
         {
             var result = false;
             try
             {
                 _context.Courses.Add(course);
-                result = await _context.SaveChangesAsync() > 0;
+                result = await _context.SaveChangesAsync() > 0 ? true : false;
             }
             catch (Exception)
             {
@@ -100,16 +103,26 @@ namespace StudioAdminData.Services
 
         }
 
-        public async Task<bool> DeleteAsync(Guid Id)
+        public async Task<bool> Delete(Guid Id)
         {
-            var course = await _context.Courses.FindAsync(Id);
-            if (course == null)
-            {
-                return false;
-            }
-            _context.Courses.Remove(course);
-            await _context.SaveChangesAsync();
-            return true;
+            return await _context.Courses.Where(x => x.Name == CourseName).FirstAsync();
+        }
+        public async Task<IEnumerable<Course>> GetByThirdAsync(Third third)
+        {
+            return await _context.Courses.Where(x => x.Thirds == third).ToListAsync();
+        }
+        public async Task<bool> InsertAsync(Course course)
+        {
+            return await _commonContext.InsertAsync(course);
+        }
+        public async Task<bool> UpdateAsync(Course course)
+        {
+            return await _commonContext.UpdateAsync(course);
+        }
+        public async Task<bool> DeleteAsync(Guid Id)
+>>>>>>> Stashed changes
+        {
+            return await _commonContext.DeleteAsync(Id);
         }
     }
 }

@@ -4,10 +4,12 @@ namespace StudioAdminData.Interfaces
 {
     public interface IThirdServices
     {
-        public List<Third> GetStudentByAge();
-        public List<Third> GetAllEnabledStudents();
-        public List<Third> GetAllStudentWithOutCourses();
-        public ICollection<Third> GetStudentsByCourseName(string CourseName);
-
+        Task<IEnumerable<Third>> GetAllAsync();
+        Task<Third> GetByIdAsync(Guid id);
+        public IEnumerable<Third> GetByAge(int age);
+        public IEnumerable<Third> GetAllEnabledStudents();
+        Task<bool> InsertAsync(Third Entity);
+        Task<bool> UpdateAsync(Third Entity);
+        Task<bool> DeleteAsync(Guid Id);
     }
 }

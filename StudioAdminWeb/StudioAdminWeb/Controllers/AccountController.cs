@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StudioAdminData.DataAcces;
 using StudioAdminData.Helppers;
 using StudioAdminData.Interfaces;
 using StudioAdminData.Models.JWT;
@@ -15,8 +14,11 @@ namespace StudioAdminData.Controllers
     {
         private readonly JwtSettings _jwtSettings;
         private readonly IUserService _userServices;
-
-        public AccountController(JwtSettings jwtSettings, StudioAdminDBContext context, IUserService userServices)
+<<<<<<< Updated upstream
+        public AccountController(JwtSettings jwtSettings, StudioAdminDBContext context)
+=======
+        public AccountController(JwtSettings jwtSettings, IUserService userServices)
+>>>>>>> Stashed changes
         {
             _jwtSettings = jwtSettings;
             _userServices = userServices;
@@ -38,7 +40,7 @@ namespace StudioAdminData.Controllers
                         EmailId = searchUser.Email,
                         Id = searchUser.Id,
                         GuidId = Guid.NewGuid(),
-                    }, _jwtSettings);
+                    }, _jwtSettings, searchUser.Roles);
                 }
                 else 
                 {

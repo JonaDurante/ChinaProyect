@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 using StudioAdminData;
 using StudioAdminData.DataAcces;
 using StudioAdminData.Interfaces;
+using StudioAdminData.Models.Abstract;
 using StudioAdminData.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,9 +22,9 @@ builder.Services.AddJwtTokenServices(builder.Configuration);
 builder.Services.AddControllers();
 
 // 4. Add Custom Services (folder services)
-builder.Services.AddScoped<IActivityValueService, ActivityValueService>();
+builder.Services.AddScoped<IActivityService, ActivityService>();
 builder.Services.AddScoped<ICourseServices, CourseServices>();
-builder.Services.AddScoped<IServices, Services>();
+builder.Services.AddScoped<ICommonServices<BaseEntity>, CommonServices<BaseEntity>>();
 builder.Services.AddScoped<IThirdServices, ThirdServices>();
 builder.Services.AddScoped<IUserService, UserService>();
 

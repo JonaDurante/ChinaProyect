@@ -1,5 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+<<<<<<< Updated upstream
+using StudioAdminData.Models.DataModels.Business;
+=======
+using StudioAdminData.Models.Abstract;
 using StudioAdminData.Models.Business;
+>>>>>>> Stashed changes
 
 namespace StudioAdminData.DataAcces
 {
@@ -9,23 +14,9 @@ namespace StudioAdminData.DataAcces
         {
             
         }
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    base.OnModelCreating(modelBuilder);
-
-        //    modelBuilder.Entity<ActivityValue>(entity =>
-        //    {
-        //        entity.HasNoKey();
-
-        //    });
-
-        //    // Aquí puedes agregar más configuraciones de entidades, relaciones, índices, etc.
-        //}
-
-        public DbSet<ActivityValue> ActivityValues { get; set; }
+        public DbSet<Activity> Activities { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Third> Thirds { get; set; }
         public DbSet<User> Users { get; set; }
-
     }
 }

@@ -9,7 +9,7 @@ namespace StudioAdminData.Models.Business
         [Required]
         public Level Level { get; set; } = Level.Basic;
         [Required]
-        public decimal Payment { get; set; } = 0.00M; //--> Courses.length == Quantity then * StudenValue from ActivityValue
+        public decimal Payment { get; set; } = 0.00M; //--> Courses.length == Quantity then * Value from Activity
         [Required]
         public DateTime LastPayment { get; set; } = DateTime.MinValue;
         [Required]

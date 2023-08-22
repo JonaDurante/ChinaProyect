@@ -21,11 +21,7 @@ namespace StudioAdminData.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
         {
-
-            var Courses = await _courseServices.GetAllCourses();
- 
             var Courses = await _courseServices.GetAllAsync();
- 
             if (Courses == null)
             {
                 return NotFound();
@@ -37,11 +33,7 @@ namespace StudioAdminData.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Course>> GetCourse(Guid id)
         {
-
-            var course = await _courseServices.GetCoursesById(id);
- 
             var course = await _courseServices.GetByIdAsync(id);
- 
             if (course == null)
             {
                 return NotFound();
@@ -61,7 +53,6 @@ namespace StudioAdminData.Controllers
  
             if (await _courseServices.UpdateAsync(course)) { return Ok(); }
             else if (await _courseServices.GetByIdAsync(course.Id) == null) { return NotFound(); }
- 
             else { return NoContent(); }
         }
 

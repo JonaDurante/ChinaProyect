@@ -16,7 +16,6 @@ namespace StudioAdminData.Services
             _context = context;
             _commonContext = commonContext;
         }
-
         public async Task<IEnumerable<User>> GetAllAsync()
         {
             return await _commonContext.GetAllAsync();
@@ -24,19 +23,19 @@ namespace StudioAdminData.Services
         public async Task<User> GetByIdAsync(Guid Id)
         {
             return await _commonContext.GetByIdAsync(Id);
-        }
+        }        
         public User GetById(Guid Id)
         {
             return _context.Users.Where(u => u.Id == Id).FirstOrDefault();
         }
         public async Task<bool> InsertAsync(User user)
         {
+            return await _commonContext.UpdateAsync(user);
+        }
+        public async Task<bool> InsertAsync(User user)
+        {
             return await _commonContext.InsertAsync(user);
 
-        }
-        public async Task<bool> UpdateAsync(User user)
-        {
-            return await _commonContext.UpdateAsync(user);
         }
         public async Task<bool> DeleteAsync(Guid Id)
         {
@@ -49,7 +48,6 @@ namespace StudioAdminData.Services
         public async Task<User> ValidateUserAsync(UserLoggin userLoggin)
         {
             return await _context.Users.FirstOrDefaultAsync(us => us.Email == userLoggin.UserName && us.Password == userLoggin.Password);
- 
         }
 
     }

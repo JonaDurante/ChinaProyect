@@ -15,12 +15,8 @@ namespace StudioAdminData.Services
         {
             _context = context;
             _commonContext = commonContext;
+        }
 
-        }
-        public async Task<IEnumerable<Course>> GetByLevelAsync(Level level)
-        {
-            return await _context.Courses.Where(x => x.Level == level /*&& x.Categories.Any(y => y.Name.Contains("Filosofía"))*/).ToListAsync();
-        }
         public async Task<IEnumerable<Course>> GetAllAsync()
         {
             return await _commonContext.GetAllAsync();
@@ -28,6 +24,14 @@ namespace StudioAdminData.Services
         public async Task<Course> GetByIdAsync(Guid Id)
         {
             return await _commonContext.GetByIdAsync(Id);
+        }
+        public async Task<IEnumerable<Course>> GetByLevelAsync(Level level)
+        {
+            return await _context.Courses.Where(x => x.Level == level /*&& x.Categories.Any(y => y.Name.Contains("Filosofía"))*/).ToListAsync();
+        }
+        public async Task<Course> GetByNameAsync(string CourseName)
+        {
+            return await _context.Courses.Where(x => x.Name == CourseName).FirstAsync();
         }
         public async Task<IEnumerable<Course>> GetByThirdAsync(Third third)
         {
@@ -42,7 +46,6 @@ namespace StudioAdminData.Services
             return await _commonContext.UpdateAsync(course);
         }
         public async Task<bool> DeleteAsync(Guid Id)
- 
         {
             return await _commonContext.DeleteAsync(Id);
         }

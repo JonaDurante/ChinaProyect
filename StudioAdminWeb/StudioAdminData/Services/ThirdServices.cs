@@ -34,7 +34,6 @@ namespace StudioAdminData.Services
         }
         public async Task<bool> InsertAsync(Third third)
         {
-
             return await _commonContext.InsertAsync(third);
         }
         public async Task<bool> UpdateAsync(Third third)
@@ -44,7 +43,6 @@ namespace StudioAdminData.Services
         public async Task<bool> DeleteAsync(Guid Id)
         {
             return await _commonContext.DeleteAsync(Id);
- 
         }
     }
 }

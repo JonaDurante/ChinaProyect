@@ -88,11 +88,7 @@ namespace StudioAdminData.Controllers
             {
                 return NotFound();
             }
-
-            if (await _userService.Delete(user))
- 
             if (await _userService.DeleteAsync(id))
- 
             { 
                 return NoContent();
             }

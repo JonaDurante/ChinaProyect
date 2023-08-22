@@ -4,7 +4,7 @@ using StudioAdminData.Models.Loggin;
 namespace StudioAdminData.Interfaces
 {
     public interface IUserService
-    {        
+    {
         Task<IEnumerable<User>> GetAllAsync();
         User GetById(Guid Id);
         Task<User> GetByIdAsync(Guid Id);

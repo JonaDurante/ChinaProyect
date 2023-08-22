@@ -14,9 +14,8 @@ namespace StudioAdminData.Controllers
     {
         private readonly JwtSettings _jwtSettings;
         private readonly IUserService _userServices;
- 
+
         public AccountController(JwtSettings jwtSettings, IUserService userServices)
- 
         {
             _jwtSettings = jwtSettings;
             _userServices = userServices;

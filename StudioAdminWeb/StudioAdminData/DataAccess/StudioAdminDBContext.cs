@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using StudioAdminData.Models.Abstract;
 using StudioAdminData.Models.Business;
 
 namespace StudioAdminData.DataAcces

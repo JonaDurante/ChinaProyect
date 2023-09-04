@@ -8,7 +8,8 @@ using StudioAdminData.Models.Loggin;
 
 namespace StudioAdminData.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{versio:ApiVersion}[controller]/[action]")]
     [ApiController]
     public class AccountController : ControllerBase
     {
@@ -20,7 +21,7 @@ namespace StudioAdminData.Controllers
             _jwtSettings = jwtSettings;
             _userServices = userServices;
         }
-
+        [MapToApiVersion("1.0")]
         [HttpPost]
         public async Task<IActionResult> GetToken(UserLoggin userLoggin)
         {

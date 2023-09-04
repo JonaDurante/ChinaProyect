@@ -47,7 +47,7 @@ namespace StudioAdminData.Services
         }
         public async Task<User> ValidateUserAsync(UserLoggin userLoggin)
         {
-            return await _context.Users.FirstOrDefaultAsync(us => us.Email == userLoggin.UserName && us.Password == userLoggin.Password);
+            return await _context.Users.FirstOrDefaultAsync(us => us.Email == userLoggin.UserMail && us.Password == userLoggin.Password);
         }
 
     }

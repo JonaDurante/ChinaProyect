@@ -1,4 +1,6 @@
 // 1. Using para trabajar con EF
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using StudioAdminData;
@@ -6,6 +8,8 @@ using StudioAdminData.DataAcces;
 using StudioAdminData.Interfaces;
 using StudioAdminData.Models.Abstract;
 using StudioAdminData.Services;
+using StudioAdminWeb.Helppers;
+using System.Net.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,13 +24,30 @@ builder.Services.AddJwtTokenServices(builder.Configuration);
 
 // Add services to the container.
 builder.Services.AddControllers();
+// HttpClient For request
+builder.Services.AddHttpClient();
 
 // 4. Add Custom Services (folder services)
 builder.Services.AddScoped<IActivityService, ActivityService>();
 builder.Services.AddScoped<ICourseServices, CourseServices>();
-builder.Services.AddScoped<ICommonServices<BaseEntity>, CommonServices<BaseEntity>>();
+builder.Services.AddScoped(typeof(ICommonServices<>), typeof(CommonServices<>));
 builder.Services.AddScoped<IThirdServices, ThirdServices>();
 builder.Services.AddScoped<IUserService, UserService>();
+
+//Versionado
+builder.Services.AddApiVersioning(setup => 
+{
+    setup.DefaultApiVersion = new ApiVersion(1, 0);
+    setup.AssumeDefaultVersionWhenUnspecified = true;
+    setup.ReportApiVersions = true;
+});
+
+// Documentacion de versiones para que los controllers reciban la versión.
+builder.Services.AddVersionedApiExplorer(setup =>
+{
+    setup.GroupNameFormat = "'v'VVV"; // ej 1.0.0 
+    setup.SubstituteApiVersionInUrl = true;
+});
 
 // 8 Add Autorization
 builder.Services.AddAuthorization(options =>
@@ -35,7 +56,7 @@ builder.Services.AddAuthorization(options =>
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddEndpointsApiExplorer();
 // 9 Config autentication in Swagger 
 builder.Services.AddSwaggerGen(options =>
 {
@@ -66,6 +87,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+builder.Services.ConfigureOptions<ConfigureSwaggerOptions>(); //incorpora las opciones a la documentacion.
 // 5. Cors Configuration
 builder.Services.AddCors(options =>
 {
@@ -80,11 +102,23 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options => 
+    {
+        foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
+        {
+            options.SwaggerEndpoint(
+                $"/swagger/{description.GroupName}/swagger.json",
+                description.GroupName.ToUpperInvariant()
+                );
+            // /swagger/v1/swagger.json
+        }
+    });
 }
 
 app.UseHttpsRedirection();

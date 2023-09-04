@@ -6,7 +6,8 @@ using StudioAdminData.Models.Business;
 
 namespace StudioAdminWeb.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{versio:ApiVersion}[controller]")]
     [ApiController]
     public class ActivityController : ControllerBase
     {

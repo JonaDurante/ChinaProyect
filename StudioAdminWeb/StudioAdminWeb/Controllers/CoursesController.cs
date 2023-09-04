@@ -6,7 +6,8 @@ using StudioAdminData.Models.Business;
 
 namespace StudioAdminData.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{versio:ApiVersion}[controller]")]
     [ApiController]
     public class CoursesController : ControllerBase
     {
@@ -48,8 +49,8 @@ namespace StudioAdminData.Controllers
         public async Task<IActionResult> PutCourse(Course course)
         {
 
-            if (await _courseServices.UpdateAsync(course)) { return Ok(); }
-            else if (await _courseServices.GetByIdAsync(course.Id) == null) { return NotFound(); }
+            //if (await _courseServices.UpdateAsync(course)) { return Ok(); }
+            //else if (await _courseServices.GetByIdAsync(course.Id) == null) { return NotFound(); }
  
             if (await _courseServices.UpdateAsync(course)) { return Ok(); }
             else if (await _courseServices.GetByIdAsync(course.Id) == null) { return NotFound(); }

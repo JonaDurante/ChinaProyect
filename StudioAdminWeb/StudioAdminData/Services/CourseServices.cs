@@ -33,9 +33,9 @@ namespace StudioAdminData.Services
         {
             return await _context.Courses.Where(x => x.Name == CourseName).FirstAsync();
         }
-        public async Task<IEnumerable<Course>> GetByThirdAsync(Third third)
+        public async Task<IEnumerable<Course>> GetByIdDate(Guid IdDate)
         {
-            return await _context.Courses.Where(x => x.Thirds == third).ToListAsync();
+            return await _context.Courses.Where(x => x.Date.Select(d=> d.Id).Contains(IdDate)).ToListAsync();
         }
         public async Task<bool> InsertAsync(Course course)
         {

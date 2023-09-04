@@ -8,7 +8,7 @@ namespace StudioAdminData.Interfaces
         public Task<Course> GetByIdAsync(Guid Id);
         public Task<IEnumerable<Course>> GetByLevelAsync(Level level);
         public Task<Course> GetByNameAsync(string CourseName);
-        public Task<IEnumerable<Course>> GetByThirdAsync(Third third);
+        public Task<IEnumerable<Course>> GetByIdDate(Guid IdDate);
         public Task<bool> UpdateAsync(Course course);
         public Task<bool> InsertAsync(Course course);
         public Task<bool> DeleteAsync(Guid Id);

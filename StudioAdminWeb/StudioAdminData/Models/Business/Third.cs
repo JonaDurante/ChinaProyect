@@ -9,16 +9,16 @@ namespace StudioAdminData.Models.Business
         [Required]
         public Level Level { get; set; } = Level.Basic;
         [Required]
-        public decimal Payment { get; set; } = 0.00M; //--> Courses.length == Quantity then * Value from Activity
+        public decimal Payment { get; set; } //--> Courses.length == Quantity then * Value from Activity
         [Required]
-        public DateTime LastPayment { get; set; } = DateTime.MinValue;
+        public DateTime LastPayment { get; set; }
         [Required]
         public DateTime DateOfBirthday { get; set; } = DateTime.MinValue;
         [Required]
+        [ForeignKey("AvailableDayId")]
+        public List<AvailableDay> Date { get; set; } = new List<AvailableDay>();
+        [Required]
         [ForeignKey("UserId")]
         public User User { get; set; } = new User();
-        [Required]
-        [ForeignKey("CourseId")]
-        public ICollection<Course> Courses { get; set; } = new List<Course>();
     }
 }

@@ -1,4 +1,5 @@
-﻿using StudioAdminData.Models.Abstract;
+﻿using Microsoft.EntityFrameworkCore;
+using StudioAdminData.Models.Abstract;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -12,12 +13,9 @@ namespace StudioAdminData.Models.Business
         [Required]
         public string Description { get; set; } = string.Empty;
         [Required]
-        public DateTime Date { get; set; } = DateTime.Now;
+        [ForeignKey("AvailableDayId")]
+        public List<AvailableDay> Date { get; set; } = new List<AvailableDay>();
         [Required]
         public Level Level { get; set; } = Level.Basic;
-        [Required]
-        [ForeignKey("ThirdId")]
-        public ICollection<Third> Thirds { get; set; } = new List<Third>();
-
     }
 }

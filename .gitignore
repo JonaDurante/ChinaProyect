@@ -7,3 +7,5 @@
 /StudioAdminWeb/StudioAdminData/obj
 /StudioAdminWeb/StudioAdminWeb/bin/Debug/net7.0
 /StudioAdminWeb/StudioAdminWeb/obj
+/StudioAdminWeb/StudioAdminWeb/appsettings.json
+/StudioAdminWeb/StudioAdminWeb/appsettings.Development.json

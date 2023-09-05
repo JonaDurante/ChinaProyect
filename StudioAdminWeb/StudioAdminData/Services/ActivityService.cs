@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using StudioAdminData.DataAcces;
 using StudioAdminData.Interfaces;
 using StudioAdminData.Models.Business;
@@ -12,26 +13,27 @@ namespace StudioAdminData.Services
         public ActivityService(StudioAdminDBContext context, ICommonServices<Activity> commonContext)
         {
             _context = context;
-            _commonContext = commonContext;
+            _commonContext = commonContext;            
         }
 
         public async Task<IEnumerable<Activity>> GetAllAsync()
-        {                        
+        {
             return await _commonContext.GetAllAsync(); ;
         }
         public async Task<Activity> GetByIdAsync(Guid id)
         {
             return await _commonContext.GetByIdAsync(id);
         }
-        public async Task<IEnumerable<Activity>> GetByRollAsync(Roles Rol) {
-
+        public async Task<IEnumerable<Activity>> GetByRollAsync(Roles Rol)
+        {
             var ActividyAndValue = await _context.Activities.Where(a => a.Roles == Rol).ToListAsync();
             return ActividyAndValue;
         }
-        public async Task<bool> UpdateAsync(Activity activity) {
+        public async Task<bool> UpdateAsync(Activity activity)
+        {
             return await _commonContext.UpdateAsync(activity);
         }
-        public async Task<bool> InsertAsync(Activity activityValue) 
+        public async Task<bool> InsertAsync(Activity activityValue)
         {
             return await _commonContext.InsertAsync(activityValue);
         }

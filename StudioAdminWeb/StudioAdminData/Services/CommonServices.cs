@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using StudioAdminData.DataAcces;
 using StudioAdminData.Interfaces;
 using StudioAdminData.Models.Abstract;
@@ -8,9 +9,11 @@ namespace StudioAdminData.Services
     public class CommonServices<T> : ICommonServices<T> where T : BaseEntity
     {
         private readonly StudioAdminDBContext _context;
-        public CommonServices(StudioAdminDBContext context)
+        private readonly ILogger<ActivityService> _logger;
+        public CommonServices(StudioAdminDBContext context, ILogger<ActivityService> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<T>> GetAllAsync() 
@@ -34,9 +37,14 @@ namespace StudioAdminData.Services
                     resultado = true;
                 }
             }
-            catch (Exception)
+            catch (DbUpdateException ex)
             {
-                //guardar error
+                // Manejar la excepción específica de DbUpdateException aquí
+                _logger.LogError(ex, $"Error al intentar Insertar {typeof(T)} ya existente");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error al intentar Insertar {typeof(T)}");
             }
             return resultado;
         }
@@ -48,10 +56,14 @@ namespace StudioAdminData.Services
             {
                 result = await _context.SaveChangesAsync() > 0;
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateException ex)
             {
-                //guardar en db
-
+                // Manejar la excepción específica de DbUpdateException aquí
+                _logger.LogError(ex, $"Error al intentar Actualizar {typeof(T)} no existente");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error al intentar Actualizar {typeof(T)}");
             }
             return result;
         }
@@ -68,9 +80,9 @@ namespace StudioAdminData.Services
                 await _context.SaveChangesAsync();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //guardar error
+                _logger.LogError(ex, $"Error al intentar Eliminar {typeof(T)}");
                 return false;
             }
 

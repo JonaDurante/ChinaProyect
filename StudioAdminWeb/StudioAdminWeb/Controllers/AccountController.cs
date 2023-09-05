@@ -15,11 +15,12 @@ namespace StudioAdminData.Controllers
     {
         private readonly JwtSettings _jwtSettings;
         private readonly IUserService _userServices;
-
-        public AccountController(JwtSettings jwtSettings, IUserService userServices)
+        private readonly ILogger<AccountController> _logger;
+        public AccountController(JwtSettings jwtSettings, IUserService userServices, ILogger<AccountController> logger)
         {
             _jwtSettings = jwtSettings;
             _userServices = userServices;
+            _logger = logger;
         }
         [MapToApiVersion("1.0")]
         [HttpPost]
@@ -39,7 +40,7 @@ namespace StudioAdminData.Controllers
                         GuidId = Guid.NewGuid(),
                     }, _jwtSettings, searchUser.Roles);
                 }
-                else 
+                else
                 {
                     return BadRequest("Wrong credentials");
                 }
@@ -47,7 +48,8 @@ namespace StudioAdminData.Controllers
             }
             catch (Exception ex)
             {
-                throw new Exception("GetToken error", ex);
+                _logger.LogError(ex, "Error al intentar generar el Token");
+                return StatusCode(500, "Ocurrió un error al procesar la solicitud.");
             }
         }
 

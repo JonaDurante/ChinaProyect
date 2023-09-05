@@ -10,8 +10,17 @@ using StudioAdminData.Models.Abstract;
 using StudioAdminData.Services;
 using StudioAdminWeb.Helppers;
 using System.Net.Http;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Config Serilog
+builder.Host.UseSerilog((HostBuilderCtx, LoggerConf) => {
+    LoggerConf
+    .WriteTo.Console() // Escribe en la consola
+    .WriteTo.Debug()   // Escriba en debug
+    .ReadFrom.Configuration(HostBuilderCtx.Configuration);
+});
 
 // 2. agregar conexion a base de datos
 const string CONNECTIONNAME = "SudioAdminDB";
@@ -114,12 +123,13 @@ if (app.Environment.IsDevelopment())
         {
             options.SwaggerEndpoint(
                 $"/swagger/{description.GroupName}/swagger.json",
-                description.GroupName.ToUpperInvariant()
+                description.GroupName.ToUpperInvariant()             //ej: /swagger/v1/swagger.json
                 );
-            // /swagger/v1/swagger.json
         }
     });
 }
+
+app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 

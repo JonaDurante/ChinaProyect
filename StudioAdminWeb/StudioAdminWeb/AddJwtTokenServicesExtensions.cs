@@ -2,7 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using StudioAdminData.Models.JWT;
 
-namespace StudioAdminData
+namespace StudioAdminWeb
 {
     // Esta clase nos permite agregar los settings de mi jwt al programa
     public static class AddJwtTokenServicesExtensions

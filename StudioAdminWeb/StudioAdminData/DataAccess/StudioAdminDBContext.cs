@@ -3,17 +3,17 @@ using Microsoft.Extensions.Logging;
 using StudioAdminData.Models.Abstract;
 using StudioAdminData.Models.Business;
 
-namespace StudioAdminData.DataAcces
+namespace StudioAdminData.DataAccess
 {
     public class StudioAdminDBContext : DbContext
     {
-        private readonly ILoggerFactory _loggerFactory; 
-        public StudioAdminDBContext(DbContextOptions <StudioAdminDBContext> options, ILoggerFactory loggerFactory) : base(options)
+        private readonly ILoggerFactory _loggerFactory;
+        public StudioAdminDBContext(DbContextOptions<StudioAdminDBContext> options, ILoggerFactory loggerFactory) : base(options)
         {
             _loggerFactory = loggerFactory;
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)  
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 

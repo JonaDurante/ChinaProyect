@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using StudioAdminData.DataAcces;
+using StudioAdminData.DataAccess;
 using StudioAdminData.Interfaces;
 using StudioAdminData.Models.Business;
 

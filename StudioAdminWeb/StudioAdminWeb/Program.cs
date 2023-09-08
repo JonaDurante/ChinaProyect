@@ -3,14 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using StudioAdminData;
-using StudioAdminData.DataAcces;
-using StudioAdminData.Interfaces;
-using StudioAdminData.Models.Abstract;
-using StudioAdminData.Services;
-using StudioAdminWeb.Helppers;
-using System.Net.Http;
 using Serilog;
+using StudioAdminData.DataAccess;
+using StudioAdminData.Interfaces;
+using StudioAdminData.Services;
+using StudioAdminWeb;
+using StudioAdminWeb.Helppers;
 
 var builder = WebApplication.CreateBuilder(args);
 

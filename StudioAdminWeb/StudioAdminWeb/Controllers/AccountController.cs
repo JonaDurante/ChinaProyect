@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StudioAdminData.Helppers;
 using StudioAdminData.Interfaces;
 using StudioAdminData.Models.JWT;
 using StudioAdminData.Models.Loggin;
+using StudioAdminWeb.Helppers;
 
-namespace StudioAdminData.Controllers
+namespace StudioAdminWeb.Controllers
 {
     [ApiVersion("1.0")]
     [Route("api/v{versio:ApiVersion}[controller]/[action]")]
@@ -56,7 +56,7 @@ namespace StudioAdminData.Controllers
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
         public async Task<IActionResult> GetUsersList()
-        { 
+        {
             return Ok(await _userServices.GetAllAsync());
         }
 

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StudioAdminData.DataAcces;
+using StudioAdminData.DataAccess;
 using StudioAdminData.Interfaces;
 using StudioAdminData.Models.Business;
 using StudioAdminData.Models.Loggin;

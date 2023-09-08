@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using StudioAdminData.Interfaces;
 using StudioAdminData.Models.Business;
 
-namespace StudioAdminData.Controllers
+namespace StudioAdminWeb.Controllers
 {
     [ApiVersion("1.0")]
     [Route("api/v{versio:ApiVersion}[controller]")]
@@ -12,7 +12,6 @@ namespace StudioAdminData.Controllers
     public class ThirdsController : ControllerBase
     {
         private readonly IThirdServices _thirdServices;
-
         public ThirdsController(IThirdServices thirdServices)
         {
             _thirdServices = thirdServices;

@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StudioAdminData.Helppers;
 using StudioAdminData.Interfaces;
+using StudioAdminData.Models.Business;
 using StudioAdminData.Models.JWT;
 using StudioAdminData.Models.Loggin;
+using StudioAdminWeb.Helppers;
 
-namespace StudioAdminData.Controllers
+namespace StudioAdminWeb.Controllers
 {
     [ApiVersion("1.0")]
     [Route("api/v{versio:ApiVersion}[controller]/[action]")]
@@ -22,9 +23,9 @@ namespace StudioAdminData.Controllers
             _userServices = userServices;
             _logger = logger;
         }
-        [MapToApiVersion("1.0")]
+
         [HttpPost]
-        public async Task<IActionResult> GetToken(UserLoggin userLoggin)
+        public async Task<IActionResult> Loggin(UserLoggin userLoggin)
         {
             try
             {
@@ -32,13 +33,7 @@ namespace StudioAdminData.Controllers
                 var searchUser = await _userServices.ValidateUserAsync(userLoggin);
                 if (searchUser != null)
                 {
-                    Token = JwtHelppers.GenerateTokenKey(new UserToken()
-                    {
-                        UserName = searchUser.Name,
-                        EmailId = searchUser.Email,
-                        Id = searchUser.Id,
-                        GuidId = Guid.NewGuid(),
-                    }, _jwtSettings, searchUser.Roles);
+                    Token = GetToken(searchUser);
                 }
                 else
                 {
@@ -48,16 +43,58 @@ namespace StudioAdminData.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error al intentar generar el Token");
-                return StatusCode(500, "Ocurrió un error al procesar la solicitud.");
+                _logger.LogError(ex, "Error when trying to generate the Token");
+                return StatusCode(500, "An error occurred while processing the request.");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> NewUser(User NewUser)
+        {
+            try
+            {
+                var Token = new UserToken();
+                if (NewUser != null)
+                {
+                    if (await _userServices.InsertAsync(NewUser))
+                    {
+                        Token = GetToken(NewUser);
+                    }
+                }
+                else
+                {
+                    return BadRequest("Wrong credentials");
+                }
+                return Ok(Token);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error when trying to generate the Token for a new User");
+                return StatusCode(500, "An error occurred while processing the request.");
             }
         }
 
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Administrator")]
         public async Task<IActionResult> GetUsersList()
-        { 
+        {
             return Ok(await _userServices.GetAllAsync());
+        }
+
+        private UserToken GetToken(User? user)
+        {
+            var Token = new UserToken();
+            if (user != null)
+            {
+                Token = JwtHelppers.GenerateTokenKey(new UserToken()
+                {
+                    UserName = user.Name,
+                    EmailId = user.Email,
+                    Id = user.Id,
+                    GuidId = Guid.NewGuid(),
+                }, _jwtSettings, user.Roles);
+            }
+            return Token;
         }
 
     }

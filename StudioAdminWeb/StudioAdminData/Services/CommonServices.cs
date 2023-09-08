@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using StudioAdminData.DataAcces;
+using StudioAdminData.DataAccess;
 using StudioAdminData.Interfaces;
 using StudioAdminData.Models.Abstract;
 
@@ -9,8 +9,8 @@ namespace StudioAdminData.Services
     public class CommonServices<T> : ICommonServices<T> where T : BaseEntity
     {
         private readonly StudioAdminDBContext _context;
-        private readonly ILogger<ActivityService> _logger;
-        public CommonServices(StudioAdminDBContext context, ILogger<ActivityService> logger)
+        private readonly ILogger<ActivityServices> _logger;
+        public CommonServices(StudioAdminDBContext context, ILogger<ActivityServices> logger)
         {
             _context = context;
             _logger = logger;
@@ -40,7 +40,7 @@ namespace StudioAdminData.Services
             catch (DbUpdateException ex)
             {
                 // Manejar la excepción específica de DbUpdateException aquí
-                _logger.LogError(ex, $"Error al intentar Insertar {typeof(T)} ya existente");
+                _logger.LogError(ex, $"Error al intentar Insertar un {typeof(T)} ya existente");
             }
             catch (Exception ex)
             {

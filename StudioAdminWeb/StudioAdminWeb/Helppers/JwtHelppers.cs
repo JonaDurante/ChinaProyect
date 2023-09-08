@@ -5,11 +5,12 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 
-namespace StudioAdminData.Helppers
+namespace StudioAdminWeb.Helppers
 {
     public static class JwtHelppers
     {
         private static Roles CurrentRol { get; set; }
+
         public static IEnumerable<Claim> GetClaims(this UserToken UserAcounts, Guid Id)
         {
             var claims = new List<Claim>
@@ -38,7 +39,7 @@ namespace StudioAdminData.Helppers
         public static IEnumerable<Claim> GetClaims(this UserToken UserAcounts, out Guid Id)
         {
             Id = Guid.NewGuid();
-            return GetClaims(UserAcounts, Id);
+            return UserAcounts.GetClaims(Id);
         }
 
         public static UserToken GenerateTokenKey(UserToken model, JwtSettings jwtSettings, Roles currentRol)
@@ -61,7 +62,7 @@ namespace StudioAdminData.Helppers
                 var jwtToken = new JwtSecurityToken(
                     issuer: jwtSettings.ValidIsUser,
                     audience: jwtSettings.ValidAudience,
-                    claims: GetClaims(model, out Guid Id),
+                    claims: model.GetClaims(out Guid Id),
                     notBefore: new DateTimeOffset(DateTime.Now).DateTime,
                     expires: new DateTimeOffset(expiredTime).DateTime,
                     signingCredentials: new SigningCredentials(

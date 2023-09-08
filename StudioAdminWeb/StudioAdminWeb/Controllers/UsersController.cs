@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using StudioAdminData.Interfaces;
 using StudioAdminData.Models.Business;
 
-namespace StudioAdminData.Controllers
+namespace StudioAdminWeb.Controllers
 {
     [ApiVersion("1.0")]
     [Route("api/v{versio:ApiVersion}[controller]")]
@@ -48,7 +48,7 @@ namespace StudioAdminData.Controllers
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<IActionResult> PutUser(Guid id, User user)
         {
-            if (! await _userService.UserExistsAsync(id))
+            if (!await _userService.UserExistsAsync(id))
             {
                 return NotFound();
             }
@@ -88,7 +88,7 @@ namespace StudioAdminData.Controllers
                 return NotFound();
             }
             if (await _userService.DeleteAsync(id))
-            { 
+            {
                 return NoContent();
             }
             return BadRequest("Error occurred during user delete.");

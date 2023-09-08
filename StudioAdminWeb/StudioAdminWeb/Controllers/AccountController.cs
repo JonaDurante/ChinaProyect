@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Common;
 using StudioAdminData.Interfaces;
+using StudioAdminData.Models.Business;
 using StudioAdminData.Models.JWT;
 using StudioAdminData.Models.Loggin;
 using StudioAdminWeb.Helppers;
@@ -24,7 +26,7 @@ namespace StudioAdminWeb.Controllers
         }
         [MapToApiVersion("1.0")]
         [HttpPost]
-        public async Task<IActionResult> GetToken(UserLoggin userLoggin)
+        public async Task<IActionResult> Loggin(UserLoggin userLoggin)
         {
             try
             {
@@ -32,13 +34,34 @@ namespace StudioAdminWeb.Controllers
                 var searchUser = await _userServices.ValidateUserAsync(userLoggin);
                 if (searchUser != null)
                 {
-                    Token = JwtHelppers.GenerateTokenKey(new UserToken()
+                    Token = GetToken(searchUser);
+                }
+                else
+                {
+                    return BadRequest("Wrong credentials");
+                }
+                return Ok(Token);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al intentar generar el Token");
+                return StatusCode(500, "Ocurrió un error al procesar la solicitud.");
+            }
+        }
+
+        [MapToApiVersion("1.0")]
+        [HttpPost]
+        public async Task<IActionResult> NewUser(User User)
+        {
+            try
+            {
+                var Token = new UserToken();
+                if (User != null)
+                {
+                    if (await _userServices.InsertAsync(User))
                     {
-                        UserName = searchUser.Name,
-                        EmailId = searchUser.Email,
-                        Id = searchUser.Id,
-                        GuidId = Guid.NewGuid(),
-                    }, _jwtSettings, searchUser.Roles);
+                        Token = GetToken(User);
+                    }
                 }
                 else
                 {
@@ -60,5 +83,17 @@ namespace StudioAdminWeb.Controllers
             return Ok(await _userServices.GetAllAsync());
         }
 
+        private UserToken GetToken(User User)
+        {
+            var Token = new UserToken();
+            Token = JwtHelppers.GenerateTokenKey(new UserToken()
+            {
+                UserName = User.Name,
+                EmailId = User.Email,
+                Id = User.Id,
+                GuidId = Guid.NewGuid(),
+            }, _jwtSettings, User.Roles);
+            return Token;
+        }
     }
 }

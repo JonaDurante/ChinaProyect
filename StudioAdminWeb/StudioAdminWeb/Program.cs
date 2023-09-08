@@ -3,15 +3,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using Serilog;
-using StudioAdminData.DataAccess;
+using StudioAdminData;
+using StudioAdminData.DataAcces;
 using StudioAdminData.Interfaces;
+using StudioAdminData.Models.Abstract;
 using StudioAdminData.Services;
 using StudioAdminWeb.Helppers;
+using System.Net.Http;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddRazorPages();
 //Config Serilog
 builder.Host.UseSerilog((HostBuilderCtx, LoggerConf) => {
     LoggerConf
@@ -35,7 +37,7 @@ builder.Services.AddControllers();
 builder.Services.AddHttpClient();
 
 // 4. Add Custom Services (folder services)
-builder.Services.AddScoped<IActivityService, ActivityServices>();
+builder.Services.AddScoped<IActivityService, ActivityService>();
 builder.Services.AddScoped<ICourseServices, CourseServices>();
 builder.Services.AddScoped(typeof(ICommonServices<>), typeof(CommonServices<>));
 builder.Services.AddScoped<IThirdServices, ThirdServices>();
@@ -137,7 +139,5 @@ app.MapControllers();
 
 // 6. Tell app to use CORS
 app.UseCors("CorsPollicy");
-
-app.MapRazorPages();
 
 app.Run();

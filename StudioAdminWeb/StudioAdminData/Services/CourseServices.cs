@@ -1,7 +1,7 @@
 ﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using StudioAdminData.DataAccess;
+using StudioAdminData.DataAcces;
 using StudioAdminData.Interfaces;
 using StudioAdminData.Models.Business;
 

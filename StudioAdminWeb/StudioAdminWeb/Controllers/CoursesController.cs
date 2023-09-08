@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using StudioAdminData.Interfaces;
 using StudioAdminData.Models.Business;
 
-namespace StudioAdminWeb.Controllers
+namespace StudioAdminData.Controllers
 {
     [ApiVersion("1.0")]
     [Route("api/v{versio:ApiVersion}[controller]")]
@@ -51,7 +51,7 @@ namespace StudioAdminWeb.Controllers
 
             //if (await _courseServices.UpdateAsync(course)) { return Ok(); }
             //else if (await _courseServices.GetByIdAsync(course.Id) == null) { return NotFound(); }
-
+ 
             if (await _courseServices.UpdateAsync(course)) { return Ok(); }
             else if (await _courseServices.GetByIdAsync(course.Id) == null) { return NotFound(); }
             else { return NoContent(); }
@@ -67,10 +67,9 @@ namespace StudioAdminWeb.Controllers
             {
                 return Ok(course);
             }
-            else
-            {
+            else {
                 return NoContent();
-            }
+            }            
         }
 
         // DELETE: api/Courses/5

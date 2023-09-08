@@ -1,15 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StudioAdminData.DataAccess;
+using Microsoft.Extensions.Logging;
+using StudioAdminData.DataAcces;
 using StudioAdminData.Interfaces;
 using StudioAdminData.Models.Business;
 
 namespace StudioAdminData.Services
 {
-    public class ActivityServices : IActivityService
+    public class ActivityService : IActivityService
     {
         private readonly StudioAdminDBContext _context;
         private readonly ICommonServices<Activity> _commonContext;
-        public ActivityServices(StudioAdminDBContext context, ICommonServices<Activity> commonContext)
+        public ActivityService(StudioAdminDBContext context, ICommonServices<Activity> commonContext)
         {
             _context = context;
             _commonContext = commonContext;            

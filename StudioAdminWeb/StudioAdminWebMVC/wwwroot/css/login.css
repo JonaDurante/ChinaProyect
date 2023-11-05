@@ -1,0 +1,20 @@
+input {
+    border-radius: 15px;
+    border-color: transparent;
+}
+
+label {
+    font-family: 'Comic Sans MS',cursive;
+    font-weight: bold;
+}
+
+.footing {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+@media (min-width: 1025px) {
+    .h-custom-2 {
+        height: 100%;
+    }
+}

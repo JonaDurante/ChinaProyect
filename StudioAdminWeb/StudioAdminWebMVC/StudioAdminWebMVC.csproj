@@ -1,0 +1,56 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\assets\favicon.ico" />
+    <None Include="wwwroot\assets\img\about\1.jpg" />
+    <None Include="wwwroot\assets\img\about\2.jpg" />
+    <None Include="wwwroot\assets\img\about\3.jpg" />
+    <None Include="wwwroot\assets\img\about\4.jpg" />
+    <None Include="wwwroot\assets\img\close-icon.svg" />
+    <None Include="wwwroot\assets\img\header-bg.jpg" />
+    <None Include="wwwroot\assets\img\logos\facebook.svg" />
+    <None Include="wwwroot\assets\img\logos\google.svg" />
+    <None Include="wwwroot\assets\img\logos\ibm.svg" />
+    <None Include="wwwroot\assets\img\logos\microsoft.svg" />
+    <None Include="wwwroot\assets\img\map-image.png" />
+    <None Include="wwwroot\assets\img\navbar-logo.svg" />
+    <None Include="wwwroot\assets\img\portfolio\1.jpg" />
+    <None Include="wwwroot\assets\img\portfolio\2.jpg" />
+    <None Include="wwwroot\assets\img\portfolio\3.jpg" />
+    <None Include="wwwroot\assets\img\portfolio\4.jpg" />
+    <None Include="wwwroot\assets\img\portfolio\5.jpg" />
+    <None Include="wwwroot\assets\img\portfolio\6.jpg" />
+    <None Include="wwwroot\assets\img\team\1.jpg" />
+    <None Include="wwwroot\assets\img\team\2.jpg" />
+    <None Include="wwwroot\assets\img\team\3.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.13">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="7.0.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.11" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StudioAdminData\StudioAdminData.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Content\" />
+    <Folder Include="wwwroot\assets\img\background\" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,102 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+
+.custom-navbar {
+    flex-grow: 0 !important;
+}
+
+.c-nav {
+    background-color: rgb(43, 27, 43) !important;
+}
+
+.bk-nav {
+    background-image: url(../assets/img/background/FondoLogo.jpg) !important; /* Reemplaza 'ruta-de-la-imagen.jpg' con la ruta de tu imagen */
+    background-size: cover !important; /* Otra propiedad opcional para ajustar el tamaño de la imagen */
+    padding: 10px !important; /* Otras propiedades CSS para personalizar la apariencia del div */
+}
+
+#dropdownUser {
+}
+
+body {
+    background: #5D4157; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #A8CABA, #5D4157); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #A8CABA, #5D4157); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    margin-bottom: 60px;
+}
+
+.titulo {
+    font-family: 'Satisfy', cursive;
+    text-align: center;
+    font-size: 60px;
+}
+
+.title-mini {
+    font-size: 40px;
+    font-family: 'Satisfy', cursive;
+}
+
+.login {
+    font-family: 'Satisfy', cursive;
+}
+
+.neon {
+    color: rgb(255, 113, 217) !important;
+    text-shadow: 0 0 20px #da11a7;
+}
+
+    .neon:after {
+        content: attr("data-text");
+        z-index: -1;
+        color: #da11a7;
+        filter: blur(150px);
+    }
+
+    .neon:before {
+        background: #da11a7;
+        z-index: -2;
+        opacity: .5;
+        filter: blur(5px);
+    }
+
+.shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.contenedor {
+    padding: 10px
+}
+
+.custom-input {
+    margin: auto;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+.fixed-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Puedes ajustar el valor de z-index según sea necesario */
+}
+

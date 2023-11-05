@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pegasus</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top p-1 pb-2 bk-nav" id="mainNav">
+        <div class="col-12 px-2 justify-content-center">
+            <div class="row px-3 justify-content-center">    
+                <a class="col-2" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/assets/img/logos/Logo.png" alt="" width="100" height="100">
+                </a>
+                <div class="col-10 d-flex justify-content-end" id="navbarResponsive">
+                    <ul class="navbar-nav text-uppercase ms-auto">
+                        <li class="nav-item nav-item-c"><a class="nav-link" asp-area="" asp-controller="Contenido" asp-action="Videos">Videos</a></li>
+                        <li class="nav-item nav-item-c"><a class="nav-link" asp-area="" asp-controller="Equipo" asp-action="Equipo">Equipo</a></li>
+                        <li class="nav-item nav-item-c"><a class="nav-link" href="#contact">Contacto</a></li>
+                        <li class="nav-item nav-item-c"><a class="nav-link" href="#contact">Clases</a></li>
+                        <li class="nav-item nav-item-c">
+                            <a class="nav-link neon loggin" style="display:none;" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
+                            <div class="dropdown" style="display:flex; margin-right:15px">
+                                <a href="#" class="d-flex col-auto align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="~/assets/img/navbar-logo.svg.jpg" alt="" width="50" height="50" class="rounded-circle">
+                                </a>
+                                <ul class="dropdown-menu text-small shadow bg-dark" aria-labelledby="dropdownUser" style="min-width:inherit;">
+                                    <li><a class="dropdown-item text-white " href="#">Favoritos</a></li>
+                                    <li><a class="dropdown-item text-white " href="#">Settings</a></li>
+                                    <li><a class="dropdown-item text-white " href="#">Profile</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-white " asp-area="" asp-controller="Home" asp-action="LogOut">Sign out</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container">
+        <main role="main" class="py-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - Pegasus - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
